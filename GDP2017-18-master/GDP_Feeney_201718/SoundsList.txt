@@ -1,0 +1,61 @@
+Group Start
+
+sample: slice.wav
+volume: 0.3
+
+sample: right.wav
+volume: 0.3
+
+sample: wrong.wav
+volume: 0.3
+
+sample: pop.wav
+volume: 0.3
+
+sample: grasp.wav
+volume: 0.3
+
+sample: steam.wav
+volume: 0.3
+
+sample: game_over.wav
+volume: 0.3
+
+sample: haloCountDown.wav
+volume: 0.3
+
+sample: fire.wav
+volume: 0.3
+
+sample: click.wav
+volume: 0.3
+
+sample: extinguish.wav
+volume: 0.3
+
+Group End
+
+
+Group Start
+
+stream: credits.mp3
+volume: 0.3
+
+Group End
+
+Group Start
+
+stream: SandwichesGameplay.wav
+volume: 0.1
+
+Group End
+
+Group Start
+
+stream: epic.wav
+volume: 0.3
+
+Group End
+
+
+
