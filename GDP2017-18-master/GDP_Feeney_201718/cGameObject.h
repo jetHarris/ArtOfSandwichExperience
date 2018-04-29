@@ -62,7 +62,7 @@ public:
 
 	//****************************************************************************************
 
-	bool eraseMeshPart(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal);
+	bool Slice(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal);
 	bool RightSideOfPlane(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex, glm::vec3&const pointOnPlane, glm::vec3&const testNormal);
 	void CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices, std::vector<cTriangle>* triangles);
 	void ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices, std::vector<cTriangle>* triangles, bool makePhysics);

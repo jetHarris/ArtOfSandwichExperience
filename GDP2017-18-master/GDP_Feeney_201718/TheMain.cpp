@@ -19,7 +19,6 @@
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
 #include <time.h> 
-
 #include <vector>		//  smart array, "array" in most languages
 #include "Utilities.h"
 #include "ModelUtilities.h"
@@ -35,35 +34,16 @@
 
 //#include "Physics/Physics.h"	// Physics collision detection functions
 #include "Physics/cPhysicsWorld.h"
-
 #include "cLightManager.h"
 
 // Include all the things that are accessed in other files
 #include "globalGameStuff.h"
-
 #include "cCamera.h"
-
 #include "cFBO.h" 
 
-//**********
-// BE a little careful of including this everywhere...
-#include "assimp/cSimpleAssimpSkinnedMeshLoader_OneMesh.h"
-//**********
 
-// Here, the scene is rendered in 3 passes:
-// 1. Render geometry to G buffer
-// 2. Perform deferred pass, rendering to Deferred buffer
-// 3. Then post-pass ("2nd pass" to the scree)
-//    Copying from the Pass2_Deferred buffer to the final screen
 cFBO g_FBO_Pass1_G_Buffer;
-//cFBO g_FBO_Pass2_Deferred;
-//cFBO g_FBO_Pass2_Deferred2;
 
-//cFBO g_FBO_Pass1_G_Buffer2;
-
-//cFBO defferedTexture;
-//cFBO defferedTexture2;
-//cFBO g_FBO_Pass2_Deferred2;
 
 GLint sexyShaderID;
 GLint renderPassNumber_LocID;
@@ -333,7 +313,7 @@ GLboolean init_gl() {
 int main(void)
 {
 	InitPhysics();
-	//GLFWwindow* pGLFWWindow;		// Moved to allow switch from windowed to full-screen
+
 	glfwSetErrorCallback(error_callback);
 
 	srand(time(NULL));
@@ -341,20 +321,17 @@ int main(void)
 
 	if (!glfwInit())
 	{
-		// exit(EXIT_FAILURE);
 		std::cout << "ERROR: Couldn't init GLFW, so we're pretty much stuck; do you have OpenGL??" << std::endl;
 		return -1;
 	}
 
 	int height = 480;	/* default */
 	int width = 640;	// default
-	std::string title = "OpenGL Rocks";
+	std::string title = "Art Of Sandwhich Experience";
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-	// C++ string
-	// C no strings. Sorry. char    char name[7] = "Michael\0";
 	::g_pGLFWWindow = glfwCreateWindow(width, height,
 		title.c_str(),
 		NULL, NULL);
@@ -391,21 +368,16 @@ int main(void)
 	cShaderManager::cShader fragShader;
 
 	vertShader.fileName = "simpleVert.glsl";
-	//fragShader.fileName = "simpleFrag.glsl"; 
 	fragShader.fileName = "simpleFragDeferred.glsl";
 
 	::g_pShaderManager->setBasePath("assets//shaders//");
 
-	// Shader objects are passed by reference so that
-	//	we can look at the results if we wanted to. 
 	if (!::g_pShaderManager->createProgramFromFile(
 		"mySexyShader", vertShader, fragShader))
 	{
 		std::cout << "Oh no! All is lost!!! Blame Loki!!!" << std::endl;
 		std::cout << ::g_pShaderManager->getLastError() << std::endl;
-		// Should we exit?? 
 		return -1;
-		//		exit(
 	}
 	std::cout << "The shaders comipled and linked OK" << std::endl;
 	init_gl();
@@ -438,16 +410,10 @@ int main(void)
 
 	LoadModelsIntoScene();
 
-	// Get the uniform locations for this shader
-//	mvp_location = glGetUniformLocation(currentProgID, "MVP");		// program, "MVP");
-
-
-//	GLint uniLoc_diffuseColour = glGetUniformLocation( currentProgID, "diffuseColour" );
-
 	::g_pSoundManager = new cSoundPlayer();
 	::g_pLightManager = new cLightManager();
 
-	::g_pLightManager->CreateLights(10);	// There are 10 lights in the shader
+	::g_pLightManager->CreateLights(8);
 
 	::g_pLightManager->vecLights[0].setLightParamType(cLight::POINT);
 	::g_pLightManager->vecLights[0].position = glm::vec3(10.0f, 30.0f, 0.0f);
@@ -484,20 +450,8 @@ int main(void)
 	::g_pLightManager->vecLights[7].attenuation.z = 0.01f;
 	::g_pLightManager->vecLights[7].diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	//::g_pLightManager->vecLights[8].setLightParamType(cLight::POINT);
-	//::g_pLightManager->vecLights[8].position = glm::vec3(-30, 5, 5);
-	//::g_pLightManager->vecLights[8].attenuation.y = 0.1f;
-
-	//::g_pLightManager->vecLights[9].setLightParamType(cLight::POINT);
-	//::g_pLightManager->vecLights[9].position = glm::vec3(0.9, 5, 31.4);
-	//::g_pLightManager->vecLights[9].attenuation.y = 0.001f;
-	//::g_pLightManager->vecLights[9].attenuation.x = 0.07f;
-	//::g_pLightManager->vecLights[9].attenuation.z = 0.01f;
-
 
 	::g_pFlameEmitter = new cEmitter(glm::vec3(0.9, 1.8, 31.4));
-
-	//6500, 42
 	::g_pFlameEmitter->init(3500, 300, //max number of particles, max created per step
 		glm::vec3(0.0f, 0.3f, 0.0f),	// Min init vel
 		glm::vec3(0.0f, 10.0f, 0.0f),	// max init vel
@@ -651,30 +605,17 @@ int main(void)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
-
-
-
-
-	//float ratio = SHADOW_WIDTH / (float)SHADOW_HEIGHT;
-	//lightProjection = glm::perspective(0.6f,			// FOV
-	//	ratio,		// Aspect ratio
-	//	1.0f,		// Near (as big as possible)
-	//	150.0f);	// Far (as small as possible)
-
-	//glm::mat4 lightView = g_pTheShadowCamera->getViewMatrix();
-
+	//set the values for the shadow pass
 	float near_plane = 20.0f, far_plane = 567.5f;
 	lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
 
 	glm::vec3 eye = glm::vec3(3.0f, 50.0f, 5.0f);
-	//glm::vec3 eye = glm::vec3(-2.0f, 50.0f, -1.0f);
 	glm::vec3 target = glm::vec3(0);
 	lightView = glm::lookAt(eye,//eye
 		target, //target
 		glm::vec3(0.0f, 1.0f, 0.0f)); //up
 
 	lightDirection = glm::normalize(eye - target);
-
 	lightSpaceMatrix = lightProjection * lightView;
 
 
@@ -706,20 +647,20 @@ int main(void)
 		totalRunningTime += deltaTime;
 		::gPhysicsWorld->TimeStep(deltaTime);
 		checkInput();
+
 		::g_pFlameEmitter->Update((float)deltaTime);
-		//if (::g_pFlameEmitter->emitting)
-		//	LightFlicker(deltaTime);
 		g_pSoundManager->UpdateSystem();
 		rotateSandwhichItems();
 
 
 
-		//to move the knife back and forth
+		//to move the knife up and down
 		float moveSpeed = 0.1;
 		glm::vec3 knifePos = pKnifeObject->getPosition();
 		if (goingDown)
 		{
 			pKnifeObject->setPosition(glm::vec3(knifePos.x, knifePos.y - (moveSpeed * 3), knifePos.z));
+			//if the knife has reached the bottom of its allowed position
 			if (knifePos.y <= 2)
 			{
 				goingDown = false;
@@ -737,7 +678,7 @@ int main(void)
 						glm::vec3 testPosTemp = testPos;
 						testPosTemp.z += ::g_vecGameObjects[i]->getPosition().z;
 						glm::vec3 testNormal = glm::vec3(0, 0, -1);
-						if (::g_vecGameObjects[i]->eraseMeshPart(true, testPosTemp, testNormal))
+						if (::g_vecGameObjects[i]->Slice(true, testPosTemp, testNormal))
 						{
 							g_pSoundManager->PlaySound(0);
 							knifePos = pKnifeObject->getPosition();
@@ -758,10 +699,6 @@ int main(void)
 			}
 		}
 
-		/*cPhysicalProperties skyBoxPP;
-		::g_pSkyBoxObject->GetPhysState(skyBoxPP);
-		skyBoxPP.position = ::g_pTheCamera->getEyePosition();
-		::g_pSkyBoxObject->SetPhysState(skyBoxPP);*/
 		if (titleScreen)
 		{
 			if (titleScreenButtonPressed || titleScreenCounter > 4.1f)
@@ -921,6 +858,10 @@ int main(void)
 			frames = 0;
 		}
 
+
+		//the following commented out blocks are for debug purposes, one to display framerate and the other
+		//to display where the ray casted object is
+
 		//std::stringstream ssTitle;
 		//std::string titleString = "GAME JAM      Framerate:" + std::to_string(framesPerSecond);
 
@@ -1003,82 +944,3 @@ void setWindowFullScreenOrWindowed(GLFWwindow* pTheWindow, bool IsFullScreen)
 	}
 	return;
 }
-//
-//void LightFlicker(double curTime)
-//{
-//	curTime *= 10;
-//	int firstRand = rand() % 10;
-//
-//	if (firstRand == 1)
-//	{
-//		int randNum = rand() % 2;
-//		int randNum2 = rand() % 2;
-//		int lightSize = ::g_pLightManager->vecLights.size();
-//		if (randNum == 1)
-//		{
-//			if (randNum2 == 1)
-//			{
-//				::g_pLightManager->vecLights.back().diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
-//			}
-//			else
-//			{
-//				::g_pLightManager->vecLights.back().diffuse = glm::vec3(1.0f, 0.1f, 0.1f);
-//			}
-//
-//		}
-//		else if (randNum == 2)
-//		{
-//			if (randNum2 == 1)
-//			{
-//				::g_pLightManager->vecLights[lightSize - 2].diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
-//			}
-//			else
-//			{
-//				::g_pLightManager->vecLights[lightSize - 2].diffuse = glm::vec3(1.0f, 0.1f, 0.1f);
-//			}
-//		}
-//		//else
-//		//{
-//		//	if (randNum2 == 1)
-//		//	{
-//		//		::g_pLightManager->vecLights[lightSize - 3].diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
-//		//	}
-//		//	else
-//		//	{
-//		//		::g_pLightManager->vecLights[lightSize - 3].diffuse = glm::vec3(1.0f, 0.1f, 0.1f);
-//		//	}
-//		//}
-//
-//		////if all lights are off, turn one on
-//		//if (::g_pLightManager->vecLights[lightSize - 1].diffuse == glm::vec3(0.0f, 0.0f, 0.0f) &&
-//		//	::g_pLightManager->vecLights[lightSize - 2].diffuse == glm::vec3(0.0f, 0.0f, 0.0f) &&
-//		//	::g_pLightManager->vecLights[lightSize - 3].diffuse == glm::vec3(0.0f, 0.0f, 0.0f))
-//		//	::g_pLightManager->vecLights[lightSize - 1].diffuse == glm::vec3(1.0f, 0.1f, 0.1f);
-//
-//
-//	}
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -91,7 +91,7 @@ struct sLightDesc {
 						// y = distance cut-off
 	                    // z angle1, w = angle2		- only for spot
 };
-const int NUMBEROFLIGHTS = 9;
+const int NUMBEROFLIGHTS = 8;
 
 uniform sLightDesc myLight[NUMBEROFLIGHTS];
 

@@ -83,6 +83,7 @@ std::vector<std::vector<std::pair<glm::vec3, cGameObject*>>> goalSandwhiches;
 
 std::vector<cGameObject*> finishedSandwhichItems;
 
+//variables needed so a press isn't detected too many times
 bool RBPressed = false;
 bool BPressed = false;
 bool XPressed = false;
@@ -91,10 +92,13 @@ bool RBPressedSecond = false;
 bool BPressedSecond = false;
 bool XPressedSecond = false;
 
+//a boolean to keep track of if the plate sandwhiches need to be moved away or not
 bool moveFinishedSammies = false;
 
+//a boolean for demonstration purposes, where I switch the inside textures of the sliced objects
 bool demonstrateCheese = false;
 
+//objects used to show goal sandwiches
 cGameObject* oliveObject;
 cGameObject* breadSliceObject;
 cGameObject* breadSliceToastedObject;
@@ -104,6 +108,7 @@ cGameObject* tomatoObject;
 
 void ChangeHoldDistance(int type, double change);
 
+//method to spawn a new object, used when a spawner object is clicked
 cGameObject* createNewObject(std::string modelName, std::string textureName, glm::vec3& pos, ObjectType type)
 {
 	cGameObject* pTempGO = new cGameObject();
@@ -1118,31 +1123,17 @@ void checkInput()
 			axesButtons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &countButtons);
 
 
-		//if (axesButtons[0] == GLFW_PRESS) //A button
-		//{
-		//	if (!titleScreenButtonPressed)
-		//	{
-		//		titleScreenButtonPressed = true;
-		//		titleScreenCounter = 4.0f;
-		//	}
-		//	if (splitscreen)
-		//	{
-		//		if (rayCastedObject2 != NULL)
-		//		{
-		//			rayCastedObject2->rBody->ZeroOutRotationalVel();
-		//		}
-		//	}
-		//	else
-		//	{
-		//		if (rayCastedObject != NULL)
-		//		{
-		//			rayCastedObject->rBody->ZeroOutRotationalVel();
-		//		}
-		//	}
-		//}
+		//A button
+		if (axesButtons[0] == GLFW_PRESS)
+		{
+			if (!titleScreenButtonPressed)
+			{
+				titleScreenButtonPressed = true;
+				titleScreenCounter = 4.0f;
+			}
+		}
 
-
-
+		//up on directional pad
 		if (axesButtons[10] == GLFW_PRESS)
 		{
 			int type = 0;
@@ -1151,6 +1142,7 @@ void checkInput()
 			ChangeHoldDistance(type, 1);
 		}
 
+		//right on the d pad
 		if (axesButtons[11] == GLFW_PRESS)
 		{
 			int type = 0;
@@ -1159,6 +1151,7 @@ void checkInput()
 			UpdateRotVelRayCastObject(type, 5);
 		}
 
+		//down on the d pad
 		if (axesButtons[12] == GLFW_PRESS)
 		{
 			int type = 0;
@@ -1167,6 +1160,7 @@ void checkInput()
 			ChangeHoldDistance(type, -1);
 		}
 
+		//left on the d pad
 		if (axesButtons[13] == GLFW_PRESS)
 		{
 			int type = 0;

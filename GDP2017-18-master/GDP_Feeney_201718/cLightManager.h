@@ -108,7 +108,7 @@ public:
 	//{
 	//	sLightDesc myLight[NUMBEROFLIGHTS];
 	//} lightingNUB;
-	static const int NUMBEROFLIGHTS = 9;
+	static const int NUMBEROFLIGHTS = 8;
 	struct sNUB_lighting
 	{
 		sLightDescNUB myLight[NUMBEROFLIGHTS];

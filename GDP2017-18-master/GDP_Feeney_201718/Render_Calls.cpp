@@ -20,7 +20,6 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-// HACK
 #include "cFBO.h"
 // Here, the scene is rendered in 3 passes:
 // 1. Render geometry to G buffer
@@ -53,11 +52,13 @@ extern GLint uniLoc_bUseLighting;
 extern glm::vec3 lightDirection;
 extern GLint isParticleLocID;
 
+//default hold distances of objects
 float destinationDistance = 57.0f;
 float destinationDistance2 = 57.0f;
 GLint curShaderProgID;
 
 
+//uniforms needed for passing information to the shader
 extern GLint uniLoc_mView;
 extern GLint uniLoc_mProjection;
 extern GLint lightSpaceMatrixLocation;
@@ -792,9 +793,15 @@ void RenderScene(std::vector< cGameObject* > &vec_pGOs, GLFWwindow* pGLFWWindow,
 
 		if (titleScreen)
 		{
+			//so the counter will not be displayed if someone is looking at the controls during the game
 			if (controlsScreen)
 				return;
-			if (titleScreenCounter < 4)
+			//at this time the instruction to click to start should be given
+			if (titleScreenCounter > 4 && titleScreenCounter < 4.1)
+			{
+				RenderText("Click or Press A to start", -0.54, 0.1, 0.002, 0.002);
+			}
+			else if (titleScreenCounter < 4) //otherwise should render the countdown to start
 			{
 				int seconds = titleScreenCounter;
 				float ratio = ((float)seconds / titleScreenCounter) * 0.009;
@@ -806,7 +813,7 @@ void RenderScene(std::vector< cGameObject* > &vec_pGOs, GLFWwindow* pGLFWWindow,
 					RenderText(num.c_str(), -0.05 - ratio * 6, 0, ratio, ratio);
 			}
 		}
-		else if (!gameOver)
+		else if (!gameOver) //if the game is running then display the score and the time left
 		{
 			int minutes = gameTimerInSeconds / 60;
 			int seconds = gameTimerInSeconds - (minutes * 60);

@@ -58,7 +58,7 @@ cGameObject::~cGameObject()
 }
 
 
-void cGameObject::SetPhysState( cPhysicalProperties &PhysState )
+void cGameObject::SetPhysState(cPhysicalProperties &PhysState)
 {
 	this->m_PhysicalProps = PhysState;
 	// cGameObject is friend of cPhysicalProperties, so can set game ID
@@ -66,12 +66,12 @@ void cGameObject::SetPhysState( cPhysicalProperties &PhysState )
 	return;
 }
 
-cPhysicalProperties cGameObject::GetPhysState( void )
+cPhysicalProperties cGameObject::GetPhysState(void)
 {
 	return this->m_PhysicalProps;
 }
 
-void cGameObject::GetPhysState( cPhysicalProperties &PhysState )
+void cGameObject::GetPhysState(cPhysicalProperties &PhysState)
 {
 	PhysState = this->m_PhysicalProps;
 	return;
@@ -87,11 +87,11 @@ void cGameObject::setPosition(glm::vec3 pos)
 	this->m_PhysicalProps.position = pos;
 }
 
-void cGameObject::overwritePotition( glm::vec3 newPosition, bool bOverwiteOldPositionToo /*=true*/ )
+void cGameObject::overwritePotition(glm::vec3 newPosition, bool bOverwiteOldPositionToo /*=true*/)
 {
 	this->m_PhysicalProps.positionLast = this->m_PhysicalProps.position;
 	this->m_PhysicalProps.position = newPosition;
-	if ( bOverwiteOldPositionToo )
+	if (bOverwiteOldPositionToo)
 	{	// Clobber the old position, too (so it looks like we're not moving)
 		this->m_PhysicalProps.positionLast = this->m_PhysicalProps.position;
 	}
@@ -103,7 +103,7 @@ glm::quat cGameObject::getQOrientation(void)
 	return this->m_PhysicalProps.qOrientation;
 }
 
-void cGameObject::overwriteQOrientation( glm::quat newOrientation )
+void cGameObject::overwriteQOrientation(glm::quat newOrientation)
 {
 	this->m_PhysicalProps.qOrientation = newOrientation;
 	return;
@@ -123,35 +123,35 @@ void cGameObject::loadMeshIntoVAONow()
 	return;
 }
 
-void cGameObject::overwriteQOrientationEuler( glm::vec3 newOrientationEuler, bool bIsDegrees /*=true*/ )
+void cGameObject::overwriteQOrientationEuler(glm::vec3 newOrientationEuler, bool bIsDegrees /*=true*/)
 {
-	if ( bIsDegrees )
+	if (bIsDegrees)
 	{
-		newOrientationEuler.x = glm::radians( newOrientationEuler.x );
-		newOrientationEuler.y = glm::radians( newOrientationEuler.y );
-		newOrientationEuler.z = glm::radians( newOrientationEuler.z );
+		newOrientationEuler.x = glm::radians(newOrientationEuler.x);
+		newOrientationEuler.y = glm::radians(newOrientationEuler.y);
+		newOrientationEuler.z = glm::radians(newOrientationEuler.z);
 	}
-	this->m_PhysicalProps.qOrientation = glm::quat( newOrientationEuler );
+	this->m_PhysicalProps.qOrientation = glm::quat(newOrientationEuler);
 	return;
 }
 
-void cGameObject::adjQOrientation( glm::quat newOrientation )
+void cGameObject::adjQOrientation(glm::quat newOrientation)
 {
 	this->m_PhysicalProps.qOrientation *= newOrientation;
 	return;
 }
 
-void cGameObject::adjQOrientationEuler( glm::vec3 newOrientationEuler, bool bIsDegrees /*= true*/ )
+void cGameObject::adjQOrientationEuler(glm::vec3 newOrientationEuler, bool bIsDegrees /*= true*/)
 {
-	if ( bIsDegrees ) 
-	{ 
-		newOrientationEuler = glm::vec3( glm::radians(newOrientationEuler.x), 
-										 glm::radians(newOrientationEuler.y), 
-										 glm::radians(newOrientationEuler.z) ); 
+	if (bIsDegrees)
+	{
+		newOrientationEuler = glm::vec3(glm::radians(newOrientationEuler.x),
+			glm::radians(newOrientationEuler.y),
+			glm::radians(newOrientationEuler.z));
 	}
 
 	// Step 1: make a quaternion that represents the angle we want to rotate
-	glm::quat rotationAdjust( newOrientationEuler );	
+	glm::quat rotationAdjust(newOrientationEuler);
 	// Step 2: Multiply this quaternion by the existing quaternion. This "adds" the angle we want.
 	this->m_PhysicalProps.qOrientation *= rotationAdjust;
 	return;
@@ -197,7 +197,7 @@ void cGameObject::CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>
 	//go through the vertices vector making a new vector of only good vertices
 	for (int i = 0; i < verticesSize; ++i)
 	{
-		
+
 		//if the current vertex is a vertex still displayed in the model
 		if (goodVertexIds.find(i) != goodVertexIds.end())
 		{
@@ -209,7 +209,7 @@ void cGameObject::CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>
 		}
 
 		deletedOffsets[i] = offset;
-		
+
 	}
 
 	std::cout << "Old Size = " << vertices->size() << std::endl;
@@ -323,7 +323,7 @@ void cGameObject::ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2
 	//newPosition.z -= this->getPosition().z;
 	//this is a hack for z position it sets it to the slice location, but the center of the object is what we need
 	//newPosition.z += pastKnifePos.z;
-	newPosition.z = pastKnifePos.z + (abs(maxXYZ.z - minXYZ.z)/2.0f);
+	newPosition.z = pastKnifePos.z + (abs(maxXYZ.z - minXYZ.z) / 2.0f);
 
 
 	//note this might have to be turned around
@@ -354,7 +354,7 @@ void cGameObject::ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2
 		(*vertices)[i].y = tempPos4In.y;
 		(*vertices)[i].z = tempPos4In.z;
 
-		
+
 
 	}
 
@@ -377,7 +377,7 @@ void cGameObject::ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2
 		//	std::cout << "X: " << xWidth << " Y: " << yWidth << " Z: " << zWidth << std::endl;
 		//}
 		//else
-			shape = gPhysicsFactory->CreateBox(glm::vec3((maxXYZ.x - minXYZ.x)/2.0f, (maxXYZ.y - minXYZ.y) / 2.0f, (maxXYZ.z - minXYZ.z) / 2.0f));
+		shape = gPhysicsFactory->CreateBox(glm::vec3((maxXYZ.x - minXYZ.x) / 2.0f, (maxXYZ.y - minXYZ.y) / 2.0f, (maxXYZ.z - minXYZ.z) / 2.0f));
 
 
 		//std::cout << "X: " << this->getPosition().x
@@ -396,7 +396,7 @@ void cGameObject::ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2
 		this->rBodyOrientationOffset = this->getQOrientation();
 
 	}
-	
+
 }
 
 void SphereEdge(glm::vec3 & pointInSphere, glm::vec3& center, float& radius)
@@ -533,438 +533,428 @@ void AverageVertex(sVertex_xyz_rgba_n_uv2_bt_4Bones* first, sVertex_xyz_rgba_n_u
 	first->z = (second->z + third->z) / 2.0f;
 }
 
-//DWORD WINAPI erasePartThreaded(void * pInitialData)
-//{
-//	cGameObject* theObject = (cGameObject*)(pInitialData);
-//
-//	theObject->testNormal = glm::normalize(theObject->testNormal);
-//	theObject->RecalculateWorldMatrix();
-//
-//	cMesh* theOldMesh = g_pVAOManager->lookupMeshFromName(theObject->vecMeshes[0].name);
-//	cMesh theNewMesh;
-//	//basically make a new mesh using the old mesh
-//	theNewMesh.maxExtent = theOldMesh->maxExtent;
-//	theNewMesh.maxExtentXYZ = theOldMesh->maxExtentXYZ;
-//	theNewMesh.maxXYZ = theOldMesh->maxXYZ;
-//	theNewMesh.minXYZ = theOldMesh->minXYZ;
-//	theNewMesh.name = theOldMesh->name;
-//	theNewMesh.scaleForUnitBBox = theOldMesh->scaleForUnitBBox;
-//
-//	theObject->vecMeshes[0].bDisableBackFaceCulling = true;
-//
-//	//being deleted when it goes out of scope
-//	//maybe change triangles and vertices into a pointer, then delete old ones before loading these into the mesh
-//	std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices = new std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>();
-//	bool meshInCut = false;
-//
-//	for (int i = 0; i < theOldMesh->numberOfVertices; ++i)
-//	{
-//		vertices->push_back(theOldMesh->pVertices[i]);
-//	}
-//
-//
-//
-//	std::vector<cTriangle>* triangles = new std::vector<cTriangle>();
-//	std::vector<std::pair<int, int>> pairs;
-//	int outSideCount = 0;
-//	bool firstInside = false;
-//	bool secondInside = false;
-//	bool thirdInside = false;
-//
-//	for (int i = 0; i < theOldMesh->numberOfTriangles; ++i)
-//	{
-//		outSideCount = 0;
-//		firstInside = true;
-//		secondInside = true;
-//		thirdInside = true;
-//
-//		if (theObject->RightSideOfPlane(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal))
-//		{
-//			outSideCount++;
-//			firstInside = false;
-//		}
-//		if (theObject->RightSideOfPlane(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal))
-//		{
-//			outSideCount++;
-//			secondInside = false;
-//		}
-//		if (theObject->RightSideOfPlane(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal))
-//		{
-//			outSideCount++;
-//			thirdInside = false;
-//		}
-//
-//		if (outSideCount == 0)
-//			triangles->push_back(theOldMesh->pTriangles[i]);
-//		else if (outSideCount == 1)
-//		{
-//			meshInCut = true;
-//
-//			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-//			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-//			sVertex_xyz_rgba_n_uv2_bt_4Bones* thirdVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-//
-//			glm::vec3 intersection1 = glm::vec3(0);
-//			glm::vec3 intersection2 = glm::vec3(0);
-//
-//			glm::vec3 middlePoint = glm::vec3(0);
-//
-//
-//			if (!firstInside)
-//			{
-//
-//				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
-//
-//				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
-//
-//				middlePoint = theObject->AveragePoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
-//				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
-//				AverageVertex(thirdVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//			}
-//			else if (!secondInside)
-//			{
-//
-//				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
-//
-//				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
-//
-//
-//				middlePoint = theObject->AveragePoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
-//				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
-//				AverageVertex(thirdVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//			}
-//			else
-//			{
-//
-//				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
-//
-//				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
-//
-//				middlePoint = theObject->AveragePoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
-//				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//				AverageVertex(thirdVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
-//			}
-//
-//			firstVert->x = intersection1.x;
-//			firstVert->y = intersection1.y;
-//			firstVert->z = intersection1.z;
-//
-//			secondVert->x = intersection2.x;
-//			secondVert->y = intersection2.y;
-//			secondVert->z = intersection2.z;
-//
-//			//and to the vertices vector
-//			vertices->push_back(*firstVert);
-//			vertices->push_back(*secondVert);
-//
-//			int size = vertices->size();
-//			//add those points to the pairs
-//			pairs.push_back(std::make_pair<int, int>(size - 1, size - 2));
-//
-//			vertices->push_back(*thirdVert);
-//			size = vertices->size();
-//
-//			//create and add the three new triangles
-//			cTriangle* firstTri = new cTriangle();
-//			cTriangle* secondTri = new cTriangle();
-//			cTriangle* thirdTri = new cTriangle();
-//
-//			if (!firstInside)
-//			{
-//				firstTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_1;
-//				secondTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_2;
-//			}
-//			else if (!secondInside)
-//			{
-//				firstTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_0;
-//				secondTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_2;
-//			}
-//			else
-//			{
-//				firstTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_0;
-//				secondTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_1;
-//			}
-//
-//
-//			firstTri->vertex_ID_1 = size - 3;
-//			firstTri->vertex_ID_2 = size - 1;
-//
-//			secondTri->vertex_ID_1 = size - 2;
-//			secondTri->vertex_ID_2 = size - 1;
-//
-//
-//			thirdTri->vertex_ID_0 = size - 1;
-//			thirdTri->vertex_ID_1 = size - 2;
-//			thirdTri->vertex_ID_2 = size - 3;
-//
-//
-//
-//			triangles->push_back(*firstTri);
-//			triangles->push_back(*secondTri);
-//			triangles->push_back(*thirdTri);
-//
-//
-//		}
-//		else if (outSideCount == 2)
-//		{
-//			meshInCut = true;
-//			//use the vertex inside Id,
-//			glm::vec3 intersection1 = glm::vec3(0);
-//			glm::vec3 intersection2 = glm::vec3(0);
-//			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-//			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-//
-//			//the triangle we will be constructing
-//			cTriangle* newTri = new cTriangle();
-//
-//			bool alreadyExistingIntersection = false;
-//
-//
-//			//find the two intersection points
-//			if (firstInside)
-//			{
-//
-//				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
-//
-//				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
-//
-//				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
-//				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//				newTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_0;
-//			}
-//			else if (secondInside)
-//			{
-//
-//				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
-//
-//				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
-//
-//				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
-//				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
-//				newTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_1;
-//			}
-//			else
-//			{
-//
-//				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
-//
-//				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
-//
-//				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
-//				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
-//				newTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_2;
-//			}
-//
-//			//set firstVert to intersection one location
-//			firstVert->x = intersection1.x;
-//			firstVert->y = intersection1.y;
-//			firstVert->z = intersection1.z;
-//
-//			//TODO calc the uv coordinates for the new verts based on the distance between the vertex and the plane
-//
-//			//firstVert->nx = glm::normalize((testNormal.x * (-1.0f)) + firstVert->nx);
-//			//firstVert->ny = glm::normalize((testNormal.y * (-1.0f)) + firstVert->ny);
-//			//firstVert->nz = glm::normalize((testNormal.z * (-1.0f)) + firstVert->nz);
-//
-//			secondVert->x = intersection2.x;
-//			secondVert->y = intersection2.y;
-//			secondVert->z = intersection2.z;
-//
-//			//secondVert->nx = glm::normalize((testNormal.x * (-1.0f)) + secondVert->nx);
-//			//secondVert->ny = glm::normalize((testNormal.y * (-1.0f)) + secondVert->ny);
-//			//secondVert->nz = glm::normalize((testNormal.z * (-1.0f)) + secondVert->nz);
-//
-//			//and to the vertices vector
-//			vertices->push_back(*firstVert);
-//			vertices->push_back(*secondVert);
-//			int size = vertices->size();
-//			//add those points to the pairs
-//			pairs.push_back(std::make_pair<int, int>(size - 1, size - 2));
-//
-//			//make a new triangle using the vertex inside and the two insersection points
-//			newTri->vertex_ID_1 = pairs.back().first;
-//			newTri->vertex_ID_2 = pairs.back().second;
-//
-//			triangles->push_back(*newTri);
-//
-//		}
-//	}
-//
-//	if (meshInCut)
-//	{
-//		//make a final vertex
-//		sVertex_xyz_rgba_n_uv2_bt_4Bones* finalVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-//		CopyVertexValues(finalVert, &(*vertices)[pairs.front().first]);
-//
-//		std::vector<std::pair<int, int>> pairsSliceFace;
-//		//go through pairs adding all the vertices to vertices again, and add the new ids to pairsSliceFace
-//		//also update all their normals to be the same as the slice face
-//		//then used pairsSliceFace instead of pairs
-//		int pairsSize = pairs.size();
-//		int vertSize = vertices->size();
-//		for (int i = 0; i < pairsSize; ++i)
-//		{
-//			vertices->push_back((*vertices)[pairs[i].first]);
-//			sVertex_xyz_rgba_n_uv2_bt_4Bones* first = &vertices->back();
-//			first->nx = theObject->testNormal.x;
-//			first->ny = theObject->testNormal.y;
-//			first->nz = theObject->testNormal.z;
-//
-//			vertices->push_back((*vertices)[pairs[i].second]);
-//			sVertex_xyz_rgba_n_uv2_bt_4Bones* second = &vertices->back();
-//			second->nx = theObject->testNormal.x;
-//			second->ny = theObject->testNormal.y;
-//			second->nz = theObject->testNormal.z;
-//
-//			vertSize += 2;
-//			pairsSliceFace.push_back(std::make_pair<int, int>(vertSize - 1, vertSize - 2));
-//		}
-//
-//
-//		//average it based on all the pairs 
-//		pairsSize = pairsSliceFace.size();
-//		vertSize = vertices->size();
-//		glm::vec3 averagePos = glm::vec3(0);
-//		float divisionValue = pairsSize * 2;
-//		for (int i = 0; i < pairsSize; ++i)
-//		{
-//			cTriangle* newTri = new cTriangle();
-//			newTri->vertex_ID_0 = pairsSliceFace[i].first;
-//			newTri->vertex_ID_1 = pairsSliceFace[i].second;
-//			newTri->vertex_ID_2 = vertSize;
-//
-//			averagePos.x += (*vertices)[pairsSliceFace[i].first].x;
-//			averagePos.y += (*vertices)[pairsSliceFace[i].first].y;
-//			averagePos.z += (*vertices)[pairsSliceFace[i].first].z;
-//
-//			averagePos.x += (*vertices)[pairsSliceFace[i].second].x;
-//			averagePos.y += (*vertices)[pairsSliceFace[i].second].y;
-//			averagePos.z += (*vertices)[pairsSliceFace[i].second].z;
-//
-//			triangles->push_back(*newTri);
-//		}
-//
-//		averagePos = averagePos / divisionValue;
-//		finalVert->x = averagePos.x;
-//		finalVert->y = averagePos.y;
-//		finalVert->z = averagePos.z;
-//		finalVert->nx = theObject->testNormal.x;
-//		finalVert->ny = theObject->testNormal.y;
-//		finalVert->nz = theObject->testNormal.z;
-//
-//		vertices->push_back(*finalVert);
-//
-//		//before reassigning the vertices make a copy of the object and call this method on it, but reverse the normal
-//		if (theObject->makeNewMesh)
-//		{
-//			cGameObject* theOtherHalf = new cGameObject();
-//			//theOtherHalf->vecMeshes = theObject->vecMeshes;
-//			//somehow the mesh is getting more and more complex, to combat this we will test for type here and simply make
-//			switch (theObject->type)
-//			{
-//			case ObjectType::CHEESE:
-//			{
-//				sMeshDrawInfo meshInfo;
-//				meshInfo.name = "cheese.ply";
-//				meshInfo.scale = 2.0f; 
-//				meshInfo.bDisableBackFaceCulling = true;
-//				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("CheeseTexture.bmp", 1.0f));
-//				theOtherHalf->vecMeshes.push_back(meshInfo);
-//			}
-//			break;
-//
-//			case ObjectType::SALAMI:
-//			{
-//				sMeshDrawInfo meshInfo;
-//				meshInfo.name = "meat.ply";
-//				meshInfo.scale = 2.0f; 
-//				meshInfo.bDisableBackFaceCulling = true;
-//				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("MeatTexture.bmp", 1.0f));
-//				theOtherHalf->vecMeshes.push_back(meshInfo);
-//			}
-//			break;
-//
-//			case ObjectType::TOMATO:
-//			{
-//				sMeshDrawInfo meshInfo;
-//				meshInfo.name = "tomato.ply";
-//				meshInfo.scale = 2.0f; 
-//				meshInfo.bDisableBackFaceCulling = true;
-//				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("tomatoTexture.bmp", 1.0f));
-//				theOtherHalf->vecMeshes.push_back(meshInfo);
-//			}
-//			break;
-//			}
-//			//a new version of the original mesh
-//
-//			theOtherHalf->type = theObject->type;
-//			pCuttingObject = theOtherHalf;
-//			theOtherHalf->setPosition(theObject->getPosition());
-//			//theOtherHalf->vecMeshes[0].scale = theObject->vecMeshes[0].scale;
-//			theOtherHalf->worldMatrix = theObject->worldMatrix;
-//			theOtherHalf->m_PhysicalProps.qOrientation = theObject->m_PhysicalProps.qOrientation;
-//			::g_vecGameObjects.push_back(theOtherHalf);
-//
-//			::g_vecGameObjects.back()->eraseMeshPart(false, theObject->pointOnPlane, theObject->testNormal * -1.0f);
-//			//::g_vecGameObjects.back()->setPosition(::g_vecGameObjects.back()->getPosition() + (testNormal * 0.5f));
-//			::g_vecGameObjects.back()->vecMeshes[0].bDisableBackFaceCulling = true;
-//			::g_vecGameObjects.back()->cuttable = true;
-//		}
-//		//dunno why, but these break on the second run through, the deletes that is
-//		//delete[] theOldMesh->pVertices;
-//
-//
-//		if (theObject->makeNewMesh)
-//		{
-//			//there is probably going to be a problem with them sharing the same mesh
-//			theNewMesh.name = theOldMesh->name + std::to_string(newMeshID);
-//			//theObject->meshName = theObject->meshName + "1";
-//			//theObject->vecMeshes[0].name = theObject->vecMeshes[0].name + std::to_string(newMeshID);
-//			theObject->newMeshName = theObject->vecMeshes[0].name + std::to_string(newMeshID);
-//			newMeshID++;
-//			//cleaning of old vertices should happen before reorienting
-//			//theObject->CleanOldVertices(vertices, triangles);
-//			theObject->ReorientPositionAndVertices(vertices, triangles, true);
-//		}
-//		else
-//		{
-//			theNewMesh.name = theOldMesh->name + std::to_string(newMeshID);
-//			//theObject->vecMeshes[0].name = theObject->vecMeshes[0].name + std::to_string(newMeshID);
-//			theObject->newMeshName = theObject->vecMeshes[0].name + std::to_string(newMeshID);
-//			newMeshID++;
-//			//theObject->CleanOldVertices(vertices, triangles);
-//			//theObject->ReorientPositionAndVertices(vertices, triangles, false);
-//		}
-//
-//
-//
-//		theNewMesh.pVertices = &(*vertices)[0];
-//		theNewMesh.numberOfVertices = vertices->size();
-//		theNewMesh.numberOfTriangles = triangles->size();
-//		theNewMesh.pTriangles = &(*triangles)[0];
-//
-//		theObject->loadMeshVector.push_back(theNewMesh);
-//		theObject->slicingFinished = true;
-//
-//		//GLint sexyShaderID = ::g_pShaderManager->getIDFromFriendlyName("mySexyShader");
-//		//g_pVAOManager->loadMeshIntoVAO(theNewMesh, sexyShaderID);
-//
-//	}
-//
-//	return meshInCut;
-//	//experiment to try and fix a broken thing
-//	//theOldMesh = theNewMesh;
-//
-//}
+DWORD WINAPI SliceThreaded(void * pInitialData)
+{
+	cGameObject* theObject = (cGameObject*)(pInitialData);
+
+	theObject->testNormal = glm::normalize(theObject->testNormal);
+	theObject->RecalculateWorldMatrix();
+
+	cMesh* theOldMesh = g_pVAOManager->lookupMeshFromName(theObject->vecMeshes[0].name);
+	cMesh theNewMesh;
+	//basically make a new mesh using the old mesh
+	theNewMesh.maxExtent = theOldMesh->maxExtent;
+	theNewMesh.maxExtentXYZ = theOldMesh->maxExtentXYZ;
+	theNewMesh.maxXYZ = theOldMesh->maxXYZ;
+	theNewMesh.minXYZ = theOldMesh->minXYZ;
+	theNewMesh.name = theOldMesh->name;
+	theNewMesh.scaleForUnitBBox = theOldMesh->scaleForUnitBBox;
+
+	theObject->vecMeshes[0].bDisableBackFaceCulling = true;
+
+	std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices = new std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>();
+	bool meshInCut = false;
+
+	for (int i = 0; i < theOldMesh->numberOfVertices; ++i)
+	{
+		vertices->push_back(theOldMesh->pVertices[i]);
+	}
 
 
-bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGameObject* theObject)
+
+	std::vector<cTriangle>* triangles = new std::vector<cTriangle>();
+	std::vector<std::pair<int, int>> pairs;
+	int outSideCount = 0;
+	bool firstInside = false;
+	bool secondInside = false;
+	bool thirdInside = false;
+
+	for (int i = 0; i < theOldMesh->numberOfTriangles; ++i)
+	{
+		outSideCount = 0;
+		firstInside = true;
+		secondInside = true;
+		thirdInside = true;
+
+		if (theObject->RightSideOfPlane(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal))
+		{
+			outSideCount++;
+			firstInside = false;
+		}
+		if (theObject->RightSideOfPlane(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal))
+		{
+			outSideCount++;
+			secondInside = false;
+		}
+		if (theObject->RightSideOfPlane(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal))
+		{
+			outSideCount++;
+			thirdInside = false;
+		}
+
+		if (outSideCount == 0)
+			triangles->push_back(theOldMesh->pTriangles[i]);
+		else if (outSideCount == 1)
+		{
+			meshInCut = true;
+
+			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+			sVertex_xyz_rgba_n_uv2_bt_4Bones* thirdVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+
+			glm::vec3 intersection1 = glm::vec3(0);
+			glm::vec3 intersection2 = glm::vec3(0);
+
+			glm::vec3 middlePoint = glm::vec3(0);
+
+
+			if (!firstInside)
+			{
+
+				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
+
+				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
+
+				middlePoint = theObject->AveragePoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
+				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
+				AverageVertex(thirdVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+			}
+			else if (!secondInside)
+			{
+
+				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
+
+				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
+
+
+				middlePoint = theObject->AveragePoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
+				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
+				AverageVertex(thirdVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+			}
+			else
+			{
+
+				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
+
+				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
+
+				middlePoint = theObject->AveragePoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
+				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+				AverageVertex(thirdVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
+			}
+
+			firstVert->x = intersection1.x;
+			firstVert->y = intersection1.y;
+			firstVert->z = intersection1.z;
+
+			secondVert->x = intersection2.x;
+			secondVert->y = intersection2.y;
+			secondVert->z = intersection2.z;
+
+			//and to the vertices vector
+			vertices->push_back(*firstVert);
+			vertices->push_back(*secondVert);
+
+			int size = vertices->size();
+			//add those points to the pairs
+			pairs.push_back(std::make_pair<int, int>(size - 1, size - 2));
+
+			vertices->push_back(*thirdVert);
+			size = vertices->size();
+
+			//create and add the three new triangles
+			cTriangle* firstTri = new cTriangle();
+			cTriangle* secondTri = new cTriangle();
+			cTriangle* thirdTri = new cTriangle();
+
+			if (!firstInside)
+			{
+				firstTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_1;
+				secondTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_2;
+			}
+			else if (!secondInside)
+			{
+				firstTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_0;
+				secondTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_2;
+			}
+			else
+			{
+				firstTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_0;
+				secondTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_1;
+			}
+
+
+			firstTri->vertex_ID_1 = size - 3;
+			firstTri->vertex_ID_2 = size - 1;
+
+			secondTri->vertex_ID_1 = size - 2;
+			secondTri->vertex_ID_2 = size - 1;
+
+
+			thirdTri->vertex_ID_0 = size - 1;
+			thirdTri->vertex_ID_1 = size - 2;
+			thirdTri->vertex_ID_2 = size - 3;
+
+
+
+			triangles->push_back(*firstTri);
+			triangles->push_back(*secondTri);
+			triangles->push_back(*thirdTri);
+
+
+		}
+		else if (outSideCount == 2)
+		{
+			meshInCut = true;
+			//use the vertex inside Id,
+			glm::vec3 intersection1 = glm::vec3(0);
+			glm::vec3 intersection2 = glm::vec3(0);
+			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+
+			//the triangle we will be constructing
+			cTriangle* newTri = new cTriangle();
+
+			bool alreadyExistingIntersection = false;
+
+
+			//find the two intersection points
+			if (firstInside)
+			{
+
+				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
+
+				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
+
+				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
+				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+				newTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_0;
+			}
+			else if (secondInside)
+			{
+
+				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
+
+				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theObject->pointOnPlane, theObject->testNormal);
+
+				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
+				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2]);
+				newTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_1;
+			}
+			else
+			{
+
+				intersection1 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1], theObject->pointOnPlane, theObject->testNormal);
+
+				intersection2 = theObject->FindIntersectionPoint(theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_2], theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0], theObject->pointOnPlane, theObject->testNormal);
+
+				CopyVertexValues(firstVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_0]);
+				CopyVertexValues(secondVert, &theOldMesh->pVertices[theOldMesh->pTriangles[i].vertex_ID_1]);
+				newTri->vertex_ID_0 = theOldMesh->pTriangles[i].vertex_ID_2;
+			}
+
+			//set firstVert to intersection one location
+			firstVert->x = intersection1.x;
+			firstVert->y = intersection1.y;
+			firstVert->z = intersection1.z;
+
+			secondVert->x = intersection2.x;
+			secondVert->y = intersection2.y;
+			secondVert->z = intersection2.z;
+
+
+			//and to the vertices vector
+			vertices->push_back(*firstVert);
+			vertices->push_back(*secondVert);
+			int size = vertices->size();
+			//add those points to the pairs
+			pairs.push_back(std::make_pair<int, int>(size - 1, size - 2));
+
+			//make a new triangle using the vertex inside and the two insersection points
+			newTri->vertex_ID_1 = pairs.back().first;
+			newTri->vertex_ID_2 = pairs.back().second;
+
+			triangles->push_back(*newTri);
+
+		}
+	}
+
+	if (meshInCut)
+	{
+		//make a final vertex
+		sVertex_xyz_rgba_n_uv2_bt_4Bones* finalVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+		CopyVertexValues(finalVert, &(*vertices)[pairs.front().first]);
+
+		std::vector<std::pair<int, int>> pairsSliceFace;
+		//go through pairs adding all the vertices to vertices again, and add the new ids to pairsSliceFace
+		//also update all their normals to be the same as the slice face
+		//then used pairsSliceFace instead of pairs
+		int pairsSize = pairs.size();
+		int vertSize = vertices->size();
+		for (int i = 0; i < pairsSize; ++i)
+		{
+			vertices->push_back((*vertices)[pairs[i].first]);
+			sVertex_xyz_rgba_n_uv2_bt_4Bones* first = &vertices->back();
+			first->nx = theObject->testNormal.x;
+			first->ny = theObject->testNormal.y;
+			first->nz = theObject->testNormal.z;
+
+			vertices->push_back((*vertices)[pairs[i].second]);
+			sVertex_xyz_rgba_n_uv2_bt_4Bones* second = &vertices->back();
+			second->nx = theObject->testNormal.x;
+			second->ny = theObject->testNormal.y;
+			second->nz = theObject->testNormal.z;
+
+			vertSize += 2;
+			pairsSliceFace.push_back(std::make_pair<int, int>(vertSize - 1, vertSize - 2));
+		}
+
+
+		//average it based on all the pairs 
+		pairsSize = pairsSliceFace.size();
+		vertSize = vertices->size();
+		glm::vec3 averagePos = glm::vec3(0);
+		float divisionValue = pairsSize * 2;
+		for (int i = 0; i < pairsSize; ++i)
+		{
+			cTriangle* newTri = new cTriangle();
+			newTri->vertex_ID_0 = pairsSliceFace[i].first;
+			newTri->vertex_ID_1 = pairsSliceFace[i].second;
+			newTri->vertex_ID_2 = vertSize;
+
+			averagePos.x += (*vertices)[pairsSliceFace[i].first].x;
+			averagePos.y += (*vertices)[pairsSliceFace[i].first].y;
+			averagePos.z += (*vertices)[pairsSliceFace[i].first].z;
+
+			averagePos.x += (*vertices)[pairsSliceFace[i].second].x;
+			averagePos.y += (*vertices)[pairsSliceFace[i].second].y;
+			averagePos.z += (*vertices)[pairsSliceFace[i].second].z;
+
+			triangles->push_back(*newTri);
+		}
+
+		averagePos = averagePos / divisionValue;
+		finalVert->x = averagePos.x;
+		finalVert->y = averagePos.y;
+		finalVert->z = averagePos.z;
+		finalVert->nx = theObject->testNormal.x;
+		finalVert->ny = theObject->testNormal.y;
+		finalVert->nz = theObject->testNormal.z;
+
+		vertices->push_back(*finalVert);
+
+		//before reassigning the vertices make a copy of the object and call this method on it, but reverse the normal
+		if (theObject->makeNewMesh)
+		{
+			cGameObject* theOtherHalf = new cGameObject();
+			//somehow the mesh is getting more and more complex, to combat this we will test for type here and simply make
+			switch (theObject->type)
+			{
+			case ObjectType::CHEESE:
+			{
+				sMeshDrawInfo meshInfo;
+				meshInfo.name = "cheese.ply";
+				meshInfo.scale = 2.0f;
+				meshInfo.bDisableBackFaceCulling = true;
+				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("CheeseTexture.bmp", 1.0f));
+				theOtherHalf->vecMeshes.push_back(meshInfo);
+			}
+			break;
+
+			case ObjectType::SALAMI:
+			{
+				sMeshDrawInfo meshInfo;
+				meshInfo.name = "meat.ply";
+				meshInfo.scale = 2.0f;
+				meshInfo.bDisableBackFaceCulling = true;
+				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("MeatTexture.bmp", 1.0f));
+				theOtherHalf->vecMeshes.push_back(meshInfo);
+			}
+			break;
+
+			case ObjectType::TOMATO:
+			{
+				sMeshDrawInfo meshInfo;
+				meshInfo.name = "tomato.ply";
+				meshInfo.scale = 2.0f;
+				meshInfo.bDisableBackFaceCulling = true;
+				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("tomatoTexture.bmp", 1.0f));
+				theOtherHalf->vecMeshes.push_back(meshInfo);
+			}
+			break;
+
+			case ObjectType::BREADSLICE:
+			{
+				sMeshDrawInfo meshInfo;
+				meshInfo.name = "breadLoaf.ply";
+				meshInfo.scale = 2.0f;
+				meshInfo.bDisableBackFaceCulling = true;
+				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("BreadLoafT.bmp", 1.0f));
+				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("breadInside.bmp", 0.0f));
+				theOtherHalf->vecMeshes.push_back(meshInfo);
+			}
+			break;
+			}
+			//a new version of the original mesh
+
+			theOtherHalf->type = theObject->type;
+			pCuttingObject = theOtherHalf;
+			theOtherHalf->setPosition(theObject->getPosition());
+			theOtherHalf->worldMatrix = theObject->worldMatrix;
+			theOtherHalf->m_PhysicalProps.qOrientation = theObject->m_PhysicalProps.qOrientation;
+			::g_vecGameObjects.push_back(theOtherHalf);
+
+			::g_vecGameObjects.back()->Slice(false, theObject->pointOnPlane, theObject->testNormal * -1.0f);
+			//::g_vecGameObjects.back()->setPosition(::g_vecGameObjects.back()->getPosition() + (testNormal * 0.5f));
+			::g_vecGameObjects.back()->vecMeshes[0].bDisableBackFaceCulling = true;
+			::g_vecGameObjects.back()->cuttable = true;
+		}
+
+
+		if (theObject->makeNewMesh)
+		{
+			theNewMesh.name = theOldMesh->name + std::to_string(newMeshID);
+			theObject->newMeshName = theObject->vecMeshes[0].name + std::to_string(newMeshID);
+			newMeshID++;
+			theObject->ReorientPositionAndVertices(vertices, triangles, true);
+		}
+		else
+		{
+			theNewMesh.name = theOldMesh->name + std::to_string(newMeshID);
+			theObject->newMeshName = theObject->vecMeshes[0].name + std::to_string(newMeshID);
+			newMeshID++;
+		}
+
+
+
+		theNewMesh.pVertices = &(*vertices)[0];
+		theNewMesh.numberOfVertices = vertices->size();
+		theNewMesh.numberOfTriangles = triangles->size();
+		theNewMesh.pTriangles = &(*triangles)[0];
+
+		theObject->loadMeshVector.push_back(theNewMesh);
+		theObject->slicingFinished = true;
+
+		//GLint sexyShaderID = ::g_pShaderManager->getIDFromFriendlyName("mySexyShader");
+		//g_pVAOManager->loadMeshIntoVAO(theNewMesh, sexyShaderID);
+
+	}
+
+	return meshInCut;
+	//experiment to try and fix a broken thing
+	//theOldMesh = theNewMesh;
+
+}
+
+
+bool SliceP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGameObject* theObject)
 {
 	//the following block is if you want this method to be threaded
 	//there is a bug with the shadow disappearing for a like 1/16th of a second
+
 	//////theObject->makeNewMesh = makeNewMesh;
 	//////theObject->pointOnPlane = pointOnPlane;
 	//////theObject->testNormal = testNormal;
@@ -976,7 +966,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 	//////theObject->slicingHandle = CreateThread(	//_beginthreadex()
 	//////	NULL, // Attributes
 	//////	0,		// 0 = default stack size,
-	//////	erasePartThreaded,
+	//////	SliceThreaded,
 	//////	(void*)thisP,		// Parameters to pass to the thread function
 	//////	0,			// 0 or CREATE_SUSPENDED, ResumeThread()
 	//////	&theObject->slicingAddress);
@@ -984,7 +974,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 	//////return true;
 
 
-
+	//this is the start of the not threaded version
 	testNormal = glm::normalize(testNormal);
 	theObject->RecalculateWorldMatrix();
 
@@ -1000,8 +990,6 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 
 	theObject->vecMeshes[0].bDisableBackFaceCulling = true;
 
-	//being deleted when it goes out of scope
-	//maybe change triangles and vertices into a pointer, then delete old ones before loading these into the mesh
 	std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices = new std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>();
 	bool meshInCut = false;
 
@@ -1261,7 +1249,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 			second->sliced = 1.0f;
 
 			vertSize += 2;
-			pairsSliceFace.push_back(std::make_pair<int, int>(vertSize -1, vertSize-2));
+			pairsSliceFace.push_back(std::make_pair<int, int>(vertSize - 1, vertSize - 2));
 		}
 
 
@@ -1310,7 +1298,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 			{
 				sMeshDrawInfo meshInfo;
 				meshInfo.name = "cheese.ply";
-				meshInfo.scale = 2.0f; 
+				meshInfo.scale = 2.0f;
 				meshInfo.bDisableBackFaceCulling = true;
 				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("CheeseTexture.bmp", 1.0f));
 				theOtherHalf->vecMeshes.push_back(meshInfo);
@@ -1321,7 +1309,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 			{
 				sMeshDrawInfo meshInfo;
 				meshInfo.name = "meat.ply";
-				meshInfo.scale = 2.0f; 
+				meshInfo.scale = 2.0f;
 				meshInfo.bDisableBackFaceCulling = true;
 				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("MeatTexture.bmp", 1.0f));
 				theOtherHalf->vecMeshes.push_back(meshInfo);
@@ -1332,7 +1320,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 			{
 				sMeshDrawInfo meshInfo;
 				meshInfo.name = "tomato.ply";
-				meshInfo.scale = 2.0f; 
+				meshInfo.scale = 2.0f;
 				meshInfo.bDisableBackFaceCulling = true;
 				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("tomatoTexture.bmp", 1.0f));
 				theOtherHalf->vecMeshes.push_back(meshInfo);
@@ -1343,7 +1331,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 			{
 				sMeshDrawInfo meshInfo;
 				meshInfo.name = "breadLoaf.ply";
-				meshInfo.scale = 2.0f; 
+				meshInfo.scale = 2.0f;
 				meshInfo.bDisableBackFaceCulling = true;
 				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("BreadLoafT.bmp", 1.0f));
 				meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("breadInside.bmp", 0.0f));
@@ -1361,7 +1349,7 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 			theOtherHalf->m_PhysicalProps.qOrientation = theObject->m_PhysicalProps.qOrientation;
 			::g_vecGameObjects.push_back(theOtherHalf);
 
-			::g_vecGameObjects.back()->eraseMeshPart(false, pointOnPlane, testNormal * -1.0f);
+			::g_vecGameObjects.back()->Slice(false, pointOnPlane, testNormal * -1.0f);
 			//::g_vecGameObjects.back()->setPosition(::g_vecGameObjects.back()->getPosition() + (testNormal * 0.5f));
 			::g_vecGameObjects.back()->vecMeshes[0].bDisableBackFaceCulling = true;
 			::g_vecGameObjects.back()->cuttable = true;
@@ -1370,25 +1358,19 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 
 		if (makeNewMesh)
 		{
-			//there is probably going to be a problem with them sharing the same mesh
 			theNewMesh.name = theOldMesh->name + std::to_string(newMeshID);
-			//theObject->meshName = theObject->meshName + "1";
 			theObject->vecMeshes[0].name = theObject->vecMeshes[0].name + std::to_string(newMeshID);
 			newMeshID++;
-			//cleaning of old vertices should happen before reorienting
-			//theObject->CleanOldVertices(vertices, triangles);
-			theObject->ReorientPositionAndVertices(vertices, triangles,true);
+			theObject->ReorientPositionAndVertices(vertices, triangles, true);
 		}
 		else
 		{
 			theNewMesh.name = theOldMesh->name + std::to_string(newMeshID);
 			theObject->vecMeshes[0].name = theObject->vecMeshes[0].name + std::to_string(newMeshID);
 			newMeshID++;
-			//theObject->CleanOldVertices(vertices, triangles);
-			//theObject->ReorientPositionAndVertices(vertices, triangles, false);
 		}
 
-		
+
 
 		theNewMesh.pVertices = &(*vertices)[0];
 		theNewMesh.numberOfVertices = vertices->size();
@@ -1404,9 +1386,9 @@ bool eraseMeshPartP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNorm
 
 }
 
-bool cGameObject::eraseMeshPart(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal)
+bool cGameObject::Slice(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal)
 {
-	return eraseMeshPartP(makeNewMesh, pointOnPlane, testNormal, this);
+	return SliceP(makeNewMesh, pointOnPlane, testNormal, this);
 }
 
 
@@ -1448,12 +1430,12 @@ void cGameObject::RecalculateWorldMatrix()
 
 void cGameObject::DeleteChildren(void)
 {
-	for ( std::vector< cGameObject* >::iterator itChild = this->vec_pChildObjects.begin();
-		  itChild != this->vec_pChildObjects.end(); itChild++ )
+	for (std::vector< cGameObject* >::iterator itChild = this->vec_pChildObjects.begin();
+		itChild != this->vec_pChildObjects.end(); itChild++)
 	{
 		// Pointer not zero (0)?
 		cGameObject* pTempChildObject = (*itChild);
-		if ( pTempChildObject != 0 )
+		if (pTempChildObject != 0)
 		{
 			// Recursively delete all children's children (and so on)
 			pTempChildObject->DeleteChildren();
@@ -1466,11 +1448,11 @@ void cGameObject::DeleteChildren(void)
 	return;
 }
 
-cGameObject* cGameObject::FindChildByFriendlyName( std::string name )
+cGameObject* cGameObject::FindChildByFriendlyName(std::string name)
 {
-	for ( std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++ )
+	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
 	{
-		if ( (*itCGO)->friendlyName == name )
+		if ((*itCGO)->friendlyName == name)
 		{
 			return (*itCGO);
 		}
@@ -1479,11 +1461,11 @@ cGameObject* cGameObject::FindChildByFriendlyName( std::string name )
 	return NULL;
 }
 
-cGameObject* cGameObject::FindChildByID( unsigned int ID )
+cGameObject* cGameObject::FindChildByID(unsigned int ID)
 {
-	for ( std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++ )
+	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
 	{
-		if ( (*itCGO)->getUniqueID() == ID )
+		if ((*itCGO)->getUniqueID() == ID)
 		{
 			return (*itCGO);
 		}
