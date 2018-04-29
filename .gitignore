@@ -1,0 +1,15 @@
+*.log
+*.exe
+*.ilk
+*.pdb
+*.tlog
+*.log
+*.obj
+*.idb
+*.db
+*.ipch
+.vs/*
+.vs/*
+Assignment2/[Rr]elease/*
+Assignment2[Dd]ebug/*
+Assignment2/dev/include/*
