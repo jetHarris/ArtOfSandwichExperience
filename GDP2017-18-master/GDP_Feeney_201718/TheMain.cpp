@@ -120,9 +120,6 @@ cGameObject* pCuttingObject;
 
 cGameObject* pKnifeObject;
 
-
-cDebugRenderer*			g_pDebugRenderer = 0;
-
 nPhysics::iPhysicsFactory* gPhysicsFactory;
 nPhysics::iPhysicsWorld* gPhysicsWorld;
 glm::vec3 pastKnifePos;
@@ -382,14 +379,6 @@ int main(void)
 	std::cout << "The shaders comipled and linked OK" << std::endl;
 	init_gl();
 
-
-	// Triangle debug renderer test...
-	::g_pDebugRenderer = new cDebugRenderer();
-	if (!::g_pDebugRenderer->initialize(error))
-	{
-		std::cout << "Warning: couldn't init the debug renderer." << std::endl;
-		std::cout << "\t" << ::g_pDebugRenderer->getLastError() << std::endl;
-	}
 
 	// Load models
 	::g_pModelAssetLoader = new cModelAssetLoader();

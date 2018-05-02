@@ -1,7 +1,6 @@
 #ifndef _cPhysicsWorld_HG_
 #define _cPhysicsWorld_HG_
 
-#include "cAABBBroadPhase.h"
 
 class cPhysicsWorld
 {

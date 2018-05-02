@@ -17,9 +17,7 @@
 // These require the inclusion of the OpenGL and-or GLFW headers
 #include "cVAOMeshManager.h"
 #include "cShaderManager.h"
-//#include "Texture/cBasicTextureManager.h"
 #include "Texture/CTextureManager.h"
-#include "cDebugRenderer.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <BulletPhysics\BulletPhysics\cBulletPhysicsFactory.h>
@@ -41,7 +39,6 @@ class cGameObject;	// Forward declare to avoid include
 extern cVAOMeshManager*			g_pVAOManager;		// (theMain.cpp)
 extern cShaderManager*			g_pShaderManager;	// (theMain.cpp)
 extern CTextureManager*			g_pTextureManager;	// (theMain.cpp)
-extern cDebugRenderer*			g_pDebugRenderer;	// (theMain.cpp)
 
 void RenderScene(std::vector< cGameObject* > &vec_pGOs, GLFWwindow* pGLFWWindow, double deltaTime, int type);
 

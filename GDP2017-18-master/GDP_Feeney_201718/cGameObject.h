@@ -87,7 +87,6 @@ public:
 	void calcXYZDepths(float &xIn, float &yIn, float &zIn);
 	inline unsigned int getUniqueID(void) { return this->m_UniqueID; }
 
-	iDebugRenderer* pDebugRenderer;
 	//glm::vec3 animationPosition;
 
 	bool bDiscardTexture = false;

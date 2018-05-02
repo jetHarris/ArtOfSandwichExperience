@@ -166,8 +166,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="cCamera.cpp" />
-    <ClCompile Include="cDebugRenderer.cpp" />
-    <ClCompile Include="cDebugRenderer_BuiltInShapes.cpp" />
     <ClCompile Include="cEmitter.cpp" />
     <ClCompile Include="cFBO.cpp" />
     <ClCompile Include="cGameObject.cpp" />
@@ -195,9 +193,6 @@
     <ClCompile Include="Persist\RnRXML\RnRXML.cpp" />
     <ClCompile Include="Persist\RnRXML\wRnRXML.cpp" />
     <ClCompile Include="Persist\SQLite\cPersistImpSQLiteGDPAdapter.cpp" />
-    <ClCompile Include="Physics\AABB_triangles.cpp" />
-    <ClCompile Include="Physics\cAABBBroadPhase.cpp" />
-    <ClCompile Include="Physics\cAABBv2.cpp" />
     <ClCompile Include="Physics\cPhysicalProperties.cpp" />
     <ClCompile Include="Physics\cPhysicsWorld.cpp" />
     <ClCompile Include="Physics\Physics.cpp">
@@ -233,7 +228,6 @@
     <ClInclude Include="assimp\cAssimpBasic_Imp.h" />
     <ClInclude Include="assimp\cSimpleAssimpSkinnedMeshLoader_OneMesh.h" />
     <ClInclude Include="cCamera.h" />
-    <ClInclude Include="cDebugRenderer.h" />
     <ClInclude Include="cEmitter.h" />
     <ClInclude Include="cFBO.h" />
     <ClInclude Include="cFrameBuffer.h" />
@@ -251,7 +245,6 @@
     <ClInclude Include="cVAOMeshManager.h" />
     <ClInclude Include="Error\CErrorLog.h" />
     <ClInclude Include="Error\COpenGLError.h" />
-    <ClInclude Include="iDebugRenderer.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Input\iInput.h" />
     <ClInclude Include="Lua\cLuaBrain.h" />
@@ -265,9 +258,6 @@
     <ClInclude Include="Persist\RnRXML\RnRXML.h" />
     <ClInclude Include="Persist\RnRXML\wRnRXML.h" />
     <ClInclude Include="Persist\SQLite\cPersistImpSQLiteGDPAdapter.h" />
-    <ClInclude Include="Physics\AABB_triangles.h" />
-    <ClInclude Include="Physics\cAABBBroadPhase.h" />
-    <ClInclude Include="Physics\cAABBv2.h" />
     <ClInclude Include="Physics\cPhysicalProperties.h" />
     <ClInclude Include="Physics\cPhysicsWorld.h" />
     <ClInclude Include="Physics\iPhysicalObject.h" />

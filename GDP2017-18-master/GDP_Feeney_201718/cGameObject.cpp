@@ -1,6 +1,5 @@
 #include "cGameObject.h"
 
-#include "iDebugRenderer.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "cCamera.h"
@@ -36,7 +35,6 @@ cGameObject::cGameObject()
 	// (Be careful of your container calls the default c'tor when copying)
 	this->m_UniqueID = cGameObject::m_nextUniqueID++;
 
-	this->pDebugRenderer = NULL;
 	this->bDiscardTexture = false;
 	this->bIsVisible = false;
 

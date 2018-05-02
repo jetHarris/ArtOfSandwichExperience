@@ -28,9 +28,6 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{01d1d4e8-0461-4272-a1e0-9f560d40d1dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DebugRenderer">
-      <UniqueIdentifier>{33773904-c3d0-492e-887a-5420aafdbedb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Physics_AABB">
       <UniqueIdentifier>{c3cf21fe-5767-4fbc-8cac-fbcec8c72ba2}</UniqueIdentifier>
     </Filter>
@@ -129,19 +126,7 @@
     <ClCompile Include="cCamera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="cDebugRenderer.cpp">
-      <Filter>DebugRenderer</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\Physics.cpp">
-      <Filter>Physics_AABB</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\cAABBBroadPhase.cpp">
-      <Filter>Physics_AABB</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\cAABBv2.cpp">
-      <Filter>Physics_AABB</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\AABB_triangles.cpp">
       <Filter>Physics_AABB</Filter>
     </ClCompile>
     <ClCompile Include="ModelUtilities.cpp">
@@ -185,9 +170,6 @@
     </ClCompile>
     <ClCompile Include="sMeshDrawInfo.cpp">
       <Filter>Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="cDebugRenderer_BuiltInShapes.cpp">
-      <Filter>DebugRenderer</Filter>
     </ClCompile>
     <ClCompile Include="Render_Calls.cpp">
       <Filter>Source Files</Filter>
@@ -293,26 +275,11 @@
     <ClInclude Include="cCamera.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="cDebugRenderer.h">
-      <Filter>DebugRenderer</Filter>
-    </ClInclude>
     <ClInclude Include="sVAOInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\AABB_triangles.h">
-      <Filter>Physics_AABB</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\Physics.h">
       <Filter>Physics_AABB</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\cAABBBroadPhase.h">
-      <Filter>Physics_AABB</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\cAABBv2.h">
-      <Filter>Physics_AABB</Filter>
-    </ClInclude>
-    <ClInclude Include="iDebugRenderer.h">
-      <Filter>DebugRenderer</Filter>
     </ClInclude>
     <ClInclude Include="ModelUtilities.h">
       <Filter>Models</Filter>
