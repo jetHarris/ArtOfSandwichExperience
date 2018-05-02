@@ -5,11 +5,6 @@
 #include <glm/glm.hpp>
 #include "globalGameStuff.h"
 
-// For the cSimpleAssimpSkinnedMeshLoader class
-#include "assimp/cSimpleAssimpSkinnedMeshLoader_OneMesh.h"
-
-#include "cAnimationState.h"
-
 extern std::vector< cGameObject* >  g_vecGameObjects;
 extern cGameObject* g_pTheDebugSphere;
 extern nPhysics::iPhysicsFactory* gPhysicsFactory;

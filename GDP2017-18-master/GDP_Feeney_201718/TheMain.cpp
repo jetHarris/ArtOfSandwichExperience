@@ -27,7 +27,6 @@
 #include "cShaderManager.h" 
 #include "cGameObject.h"
 #include "cVAOMeshManager.h"
-#include "cAnimationState.h"
 #include "cEmitter.h"
 #include "cSoundPlayer.h"
 
@@ -37,51 +36,15 @@
 #include "globalGameStuff.h"
 #include "cCamera.h"
 #include "cFBO.h" 
+#include "cShaderHolder.h"
 
 
 cFBO g_FBO_Pass1_G_Buffer;
 
 
 GLint sexyShaderID;
-GLint renderPassNumber_LocID;
-GLboolean renderPassVertexNum;
-GLboolean shadowStuff;
-GLint lightSpaceMatrixLocation;
-GLint shadowLocId;
 
-GLint uniLoc_mView;
-GLint uniLoc_mProjection;
-GLint uniLoc_bFire;
-GLint uniLoc_bTitleScreen;
-GLint uniLoc_titleCounter;
-GLint uniLoc_bIsSplitscreen;
-GLint uniLoc_mModel;
-GLint uniLoc_mWorldInvTrans;
-GLint uniLoc_eyePosition;
-GLint uniLoc_ambientToDiffuseRatio;
-GLint uniLoc_materialSpecular;
-GLint uniLoc_materialDiffuse;
-GLint uniLoc_bIsSkyBoxObject;
-GLint uniLoc_bDiscardTexture;
-GLint uniLoc_Time;
-GLint uniLoc_bIsDebugWireFrameObject;
-GLint uniLoc_bUseLighting;
-GLint uniLoc_bIsLookedAt;
-GLint isReflectRefract_UniLoc;
-GLint reflectBlendRatio_UniLoc;
-GLint refractBlendRatio_UniLoc;
-GLint coefficientRefract_UniLoc;
-GLint bUseTextureAsDiffuse_UniLoc;
-GLint materialDiffuse_UniLoc;
-GLint texFBOColour2DLocID;
-GLint texFBONormal2DLocID;
-GLint texFBOWorldPosition2DLocID;
-GLint screenWidthLocID;
-GLint screenHeightLocID;
-GLint lightDirectionLocID;
-GLint isParticleLocID;
-
-
+cShaderHolder* mainShader = NULL;
 
 cGameObject* g_pSkyBoxObject = NULL;	// (theMain.cpp)
 
@@ -357,6 +320,7 @@ int main(void)
 	std::string error;
 
 	::g_pShaderManager = new cShaderManager();
+	::mainShader = new cShaderHolder();
 
 	cShaderManager::cShader vertShader;
 	cShaderManager::cShader fragShader;
@@ -523,45 +487,11 @@ int main(void)
 
 	glEnable(GL_DEPTH);
 
+	mainShader->loadUniforms(sexyShaderID);
 	//get all the uniform locations
-	renderPassNumber_LocID = glGetUniformLocation(sexyShaderID, "renderPassNumber");
-	renderPassVertexNum = glGetUniformLocation(sexyShaderID, "renderPassNumVertex");
-	shadowStuff = glGetUniformLocation(sexyShaderID, "shadowStuff");
-	shadowLocId = glGetUniformLocation(sexyShaderID, "shadowMap"); //check what this is doing
-	lightSpaceMatrixLocation = glGetUniformLocation(sexyShaderID, "lightSpaceMatrix");
-	uniLoc_bFire = glGetUniformLocation(sexyShaderID, "bIsFire");
-	uniLoc_bTitleScreen = glGetUniformLocation(sexyShaderID, "bIsTitleScreen");
-	uniLoc_titleCounter = glGetUniformLocation(sexyShaderID, "titleCounter");
-	uniLoc_bIsSplitscreen = glGetUniformLocation(sexyShaderID, "bIsSplitscreen");
-	uniLoc_mModel = glGetUniformLocation(sexyShaderID, "mModel");
-	uniLoc_mWorldInvTrans = glGetUniformLocation(sexyShaderID, "mWorldInvTranspose");
-	uniLoc_eyePosition = glGetUniformLocation(sexyShaderID, "eyePosition");
-	uniLoc_ambientToDiffuseRatio = glGetUniformLocation(sexyShaderID, "ambientToDiffuseRatio");
-	uniLoc_materialSpecular = glGetUniformLocation(sexyShaderID, "materialSpecular");
-	uniLoc_materialDiffuse = glGetUniformLocation(sexyShaderID, "materialDiffuse");
-	uniLoc_bIsSkyBoxObject = glGetUniformLocation(sexyShaderID, "isASkyBox");
-	uniLoc_bDiscardTexture = glGetUniformLocation(sexyShaderID, "bDiscardTexture");
-	uniLoc_Time = glGetUniformLocation(sexyShaderID, "iTime");
-	uniLoc_bIsDebugWireFrameObject = glGetUniformLocation(sexyShaderID, "bIsDebugWireFrameObject");
-	uniLoc_bUseLighting = glGetUniformLocation(sexyShaderID, "bUseLighting");
-	uniLoc_bIsLookedAt = glGetUniformLocation(sexyShaderID, "bIsLookedAt");
-	isReflectRefract_UniLoc = glGetUniformLocation(sexyShaderID, "isReflectRefract");
-	reflectBlendRatio_UniLoc = glGetUniformLocation(sexyShaderID, "reflectBlendRatio");
-	refractBlendRatio_UniLoc = glGetUniformLocation(sexyShaderID, "refractBlendRatio");
-	coefficientRefract_UniLoc = glGetUniformLocation(sexyShaderID, "coefficientRefract");
-	bUseTextureAsDiffuse_UniLoc = glGetUniformLocation(sexyShaderID, "bUseTextureAsDiffuse");
-	materialDiffuse_UniLoc = glGetUniformLocation(sexyShaderID, "materialDiffuse");
-	texFBOColour2DLocID = glGetUniformLocation(sexyShaderID, "texFBOColour2D");
-	texFBONormal2DLocID = glGetUniformLocation(sexyShaderID, "texFBONormal2D");
-	texFBOWorldPosition2DLocID = glGetUniformLocation(sexyShaderID, "texFBOVertexWorldPos2D");
-	screenWidthLocID = glGetUniformLocation(sexyShaderID, "screenWidth");
-	screenHeightLocID = glGetUniformLocation(sexyShaderID, "screenHeight");
-	lightDirectionLocID = glGetUniformLocation(sexyShaderID, "lightDir");
-	isParticleLocID = glGetUniformLocation(sexyShaderID, "isParticle");
 
-
-	uniLoc_mView = glGetUniformLocation(sexyShaderID, "mView");
-	uniLoc_mProjection = glGetUniformLocation(sexyShaderID, "mProjection");
+	/*uniLoc_mView = glGetUniformLocation(sexyShaderID, "mView");
+	uniLoc_mProjection = glGetUniformLocation(sexyShaderID, "mProjection");*/
 	// Create an FBO
 	if (!::g_FBO_Pass1_G_Buffer.init(1920, 1080, error))
 	{
@@ -722,11 +652,11 @@ int main(void)
 		//shadows
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		glUniform1i(renderPassNumber_LocID, SHADOWPASS);
-		glUniform1f(renderPassVertexNum, GL_TRUE);
-		glUniform1f(shadowStuff, GL_TRUE);
+		glUniform1i(mainShader->renderPassNumber_LocID, SHADOWPASS);
+		glUniform1f(mainShader->renderPassVertexNum, GL_TRUE);
+		glUniform1f(mainShader->shadowStuff, GL_TRUE);
 
-		glUniformMatrix4fv(lightSpaceMatrixLocation, 1, GL_FALSE,
+		glUniformMatrix4fv(mainShader->lightSpaceMatrixLocation, 1, GL_FALSE,
 			(const GLfloat*)glm::value_ptr(lightSpaceMatrix));
 		RenderScene(::g_vecGameObjects, ::g_pGLFWWindow, deltaTime, RenderSceneTypes::ShadowPass);
 
@@ -745,9 +675,9 @@ int main(void)
 		// Direct everything to the FBO
 
 		glBindFramebuffer(GL_FRAMEBUFFER, g_FBO_Pass1_G_Buffer.ID);
-		glUniform1i(renderPassNumber_LocID, RENDER_PASS_0_G_BUFFER_PASS);
-		glUniform1f(renderPassVertexNum, GL_FALSE);
-		glUniform1f(shadowStuff, GL_FALSE);
+		glUniform1i(mainShader->renderPassNumber_LocID, RENDER_PASS_0_G_BUFFER_PASS);
+		glUniform1f(mainShader->renderPassVertexNum, GL_FALSE);
+		glUniform1f(mainShader->shadowStuff, GL_FALSE);
 
 
 		g_FBO_Pass1_G_Buffer.clearBuffers();
@@ -756,7 +686,7 @@ int main(void)
 		unsigned int shadowUnit = 55;
 		glActiveTexture(GL_TEXTURE0 + 55);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		glUniform1i(shadowLocId, shadowUnit);
+		glUniform1i(mainShader->shadowLocId, shadowUnit);
 
 		if (splitscreen)
 		{
@@ -779,8 +709,8 @@ int main(void)
 
 		::g_pShaderManager->useShaderProgram("mySexyShader");
 
-		glUniform1i(renderPassNumber_LocID, RENDER_PASS_1_DEFERRED_RENDER_PASS);
-		glUniform1f(renderPassVertexNum, GL_FALSE);
+		glUniform1i(mainShader->renderPassNumber_LocID, RENDER_PASS_1_DEFERRED_RENDER_PASS);
+		glUniform1f(mainShader->renderPassVertexNum, GL_FALSE);
 
 		//uniform sampler2D texFBONormal2D;
 		//uniform sampler2D texFBOVertexWorldPos2D;
@@ -798,15 +728,15 @@ int main(void)
 		// Pick a texture unit... 
 		glActiveTexture(GL_TEXTURE0 + texFBOColour2DTextureUnitID);
 		glBindTexture(GL_TEXTURE_2D, g_FBO_Pass1_G_Buffer.colourTexture_0_ID);
-		glUniform1i(texFBOColour2DLocID, texFBOColour2DTextureUnitID);
+		glUniform1i(mainShader->texFBOColour2DLocID, texFBOColour2DTextureUnitID);
 
 		glActiveTexture(GL_TEXTURE0 + texFBONormal2DTextureUnitID);
 		glBindTexture(GL_TEXTURE_2D, g_FBO_Pass1_G_Buffer.normalTexture_1_ID);
-		glUniform1i(texFBONormal2DLocID, texFBONormal2DTextureUnitID);
+		glUniform1i(mainShader->texFBONormal2DLocID, texFBONormal2DTextureUnitID);
 
 		glActiveTexture(GL_TEXTURE0 + texFBOWorldPosition2DTextureUnitID);
 		glBindTexture(GL_TEXTURE_2D, g_FBO_Pass1_G_Buffer.vertexWorldPos_2_ID);
-		glUniform1i(texFBOWorldPosition2DLocID, texFBOWorldPosition2DTextureUnitID);
+		glUniform1i(mainShader->texFBOWorldPosition2DLocID, texFBOWorldPosition2DTextureUnitID);
 
 
 		// Set the sampler in the shader to the same texture unit (20)
@@ -814,8 +744,8 @@ int main(void)
 		glfwGetFramebufferSize(::g_pGLFWWindow, &width, &height);
 
 
-		glUniform1f(screenWidthLocID, (float)width);
-		glUniform1f(screenHeightLocID, (float)height);
+		glUniform1f(mainShader->screenWidthLocID, (float)width);
+		glUniform1f(mainShader->screenHeightLocID, (float)height);
 
 
 		std::vector< cGameObject* >  vecCopy2ndPass;
@@ -874,6 +804,7 @@ int main(void)
 	delete ::g_pShaderManager;
 	delete ::g_pVAOManager;
 	delete ::g_pSoundManager;
+	delete ::mainShader;
 
 	//    exit(EXIT_SUCCESS);
 	return 0;

@@ -40,8 +40,6 @@ cGameObject::cGameObject()
 
 	this->spawnerType = 0;
 
-	// Set to NULL (or 0, or nullptr)
-	this->pSimpleSkinnedMesh = NULL;		// 0
 	this->pAniState = NULL;					// 0
 	this->type = ObjectType::MISC;
 

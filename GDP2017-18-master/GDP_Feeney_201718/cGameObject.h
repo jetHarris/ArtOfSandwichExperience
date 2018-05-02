@@ -19,7 +19,6 @@
 #include "cMesh.h"
 #include <Windows.h>
 
-class cSimpleAssimpSkinnedMesh;	// Forward declare
 class cAnimationState;			// Forward declare 
 
 class sVertex_xyz_rgba_n_uv2;
@@ -135,14 +134,6 @@ public:
 
 	void UnsetAllAnimationStates();
 
-
-	// Used when there is only one game object (like with text), but we're drawing it many times
-	//void pushRenderingState(void);
-	//// Ignores call if nothing on stack
-	//void popRenderingState(void);
-
-	// If NULL, then object ISN'T a skinned mesh
-	cSimpleAssimpSkinnedMesh*	pSimpleSkinnedMesh;	
 	cAnimationState*			pAniState;			
 	cPhysicalProperties m_PhysicalProps;
 private:

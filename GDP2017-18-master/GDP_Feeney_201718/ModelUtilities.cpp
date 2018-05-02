@@ -7,7 +7,6 @@
 #include "cModelAssetLoader.h"
 #include "assimp/cAssimpBasic.h"
 #include <iostream>
-#include "assimp/cSimpleAssimpSkinnedMeshLoader_OneMesh.h"
 
 // Declared in globalStuff.h
 

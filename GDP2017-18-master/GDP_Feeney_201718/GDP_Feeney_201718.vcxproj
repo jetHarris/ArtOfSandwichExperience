@@ -157,8 +157,6 @@
   <ItemGroup>
     <ClCompile Include="assimp\cAssimpBasic.cpp" />
     <ClCompile Include="assimp\cAssimpBasic_Imp.cpp" />
-    <ClCompile Include="assimp\cSimpleAssimpSkinnedMeshLoader_OneMesh.cpp" />
-    <ClCompile Include="cAnimationState.cpp" />
     <ClCompile Include="cBasicTextureManager_FreeImage.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -174,6 +172,7 @@
     <ClCompile Include="cMesh.cpp" />
     <ClCompile Include="cModelAssetLoader.cpp" />
     <ClCompile Include="cShader.cpp" />
+    <ClCompile Include="cShaderHolder.cpp" />
     <ClCompile Include="cShaderManager.cpp" />
     <ClCompile Include="cSoundPlayer.cpp" />
     <ClCompile Include="cTriangle.cpp" />
@@ -217,19 +216,18 @@
   <ItemGroup>
     <ClInclude Include="assimp\cAssimpBasic.h" />
     <ClInclude Include="assimp\cAssimpBasic_Imp.h" />
-    <ClInclude Include="assimp\cSimpleAssimpSkinnedMeshLoader_OneMesh.h" />
     <ClInclude Include="cCamera.h" />
     <ClInclude Include="cEmitter.h" />
     <ClInclude Include="cFBO.h" />
     <ClInclude Include="cFrameBuffer.h" />
     <ClInclude Include="cGameObject.h" />
     <ClInclude Include="CHRTimer.h" />
-    <ClInclude Include="cAnimationState.h" />
     <ClInclude Include="cLightManager.h" />
     <ClInclude Include="cMesh.h" />
     <ClInclude Include="cModelAssetLoader.h" />
     <ClInclude Include="cParticle.h" />
     <ClInclude Include="cSceneManager.h" />
+    <ClInclude Include="cShaderHolder.h" />
     <ClInclude Include="cShaderManager.h" />
     <ClInclude Include="cSoundPlayer.h" />
     <ClInclude Include="cTriangle.h" />
@@ -273,10 +271,6 @@
     <ClInclude Include="Utilities\CStringUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\shaders\debugFrag.glsl" />
-    <None Include="assets\shaders\debugGeom.glsl" />
-    <None Include="assets\shaders\debugGeom_PassThrough.glsl" />
-    <None Include="assets\shaders\debugVert.glsl" />
     <None Include="assets\shaders\simpleFrag.glsl" />
     <None Include="assets\shaders\simpleFragDeferred.glsl" />
     <None Include="assets\shaders\simpleVert.glsl" />

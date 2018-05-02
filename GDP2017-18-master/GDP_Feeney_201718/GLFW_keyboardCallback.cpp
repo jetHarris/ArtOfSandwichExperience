@@ -5,7 +5,6 @@
 #include <iostream>
 #include <algorithm>
 
-#include "cAnimationState.h"
 #include "cEmitter.h"
 #include "cSoundPlayer.h"
 

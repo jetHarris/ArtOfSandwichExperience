@@ -22,9 +22,6 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{01d1d4e8-0461-4272-a1e0-9f560d40d1dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics_AABB">
-      <UniqueIdentifier>{c3cf21fe-5767-4fbc-8cac-fbcec8c72ba2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Models">
       <UniqueIdentifier>{9719379f-c4c7-4c03-9fd4-bd92ed1191ab}</UniqueIdentifier>
     </Filter>
@@ -61,14 +58,14 @@
     <Filter Include="FrameBuffer">
       <UniqueIdentifier>{f53cefaa-2995-456e-83b8-dee70ebd56fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders\DebugShaders">
-      <UniqueIdentifier>{a4ac88a9-9b10-46d3-8119-6baff51e36cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Emitter">
       <UniqueIdentifier>{d62affa6-7627-428c-bdd7-c6e02c04af6d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sound">
       <UniqueIdentifier>{e4c50c0d-d456-44dd-b466-94e489284924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics_Properties">
+      <UniqueIdentifier>{c3cf21fe-5767-4fbc-8cac-fbcec8c72ba2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +100,7 @@
       <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="Physics\Physics.cpp">
-      <Filter>Physics_AABB</Filter>
+      <Filter>Physics_Properties</Filter>
     </ClCompile>
     <ClCompile Include="ModelUtilities.cpp">
       <Filter>Models</Filter>
@@ -124,7 +121,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Physics\cPhysicalProperties.cpp">
-      <Filter>Physics_AABB</Filter>
+      <Filter>Physics_Properties</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
       <Filter>Utilities</Filter>
@@ -177,14 +174,8 @@
     <ClCompile Include="cFBO.cpp">
       <Filter>FrameBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="assimp\cSimpleAssimpSkinnedMeshLoader_OneMesh.cpp">
-      <Filter>Models\AssimpFBX</Filter>
-    </ClCompile>
     <ClCompile Include="cModelAssetLoader.cpp">
       <Filter>Models</Filter>
-    </ClCompile>
-    <ClCompile Include="cAnimationState.cpp">
-      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="cEmitter.cpp">
       <Filter>Emitter</Filter>
@@ -194,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="MediaObject.cpp">
       <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="cShaderHolder.cpp">
+      <Filter>ShaderManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,7 +219,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Physics\Physics.h">
-      <Filter>Physics_AABB</Filter>
+      <Filter>Physics_Properties</Filter>
     </ClInclude>
     <ClInclude Include="ModelUtilities.h">
       <Filter>Models</Filter>
@@ -246,10 +240,10 @@
       <Filter>Scene and Game Managers</Filter>
     </ClInclude>
     <ClInclude Include="Physics\cPhysicalProperties.h">
-      <Filter>Physics_AABB</Filter>
+      <Filter>Physics_Properties</Filter>
     </ClInclude>
     <ClInclude Include="Physics\iPhysicalObject.h">
-      <Filter>Physics_AABB</Filter>
+      <Filter>Physics_Properties</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Utilities</Filter>
@@ -308,14 +302,8 @@
     <ClInclude Include="cFBO.h">
       <Filter>FrameBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="assimp\cSimpleAssimpSkinnedMeshLoader_OneMesh.h">
-      <Filter>Models\AssimpFBX</Filter>
-    </ClInclude>
     <ClInclude Include="cModelAssetLoader.h">
       <Filter>Models</Filter>
-    </ClInclude>
-    <ClInclude Include="cAnimationState.h">
-      <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="cEmitter.h">
       <Filter>Emitter</Filter>
@@ -335,6 +323,9 @@
     <ClInclude Include="sVertex_xyz_rgba_n_uv2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cShaderHolder.h">
+      <Filter>ShaderManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\simpleVert.glsl">
@@ -345,18 +336,6 @@
     </None>
     <None Include="assets\shaders\simpleFragDeferred.glsl">
       <Filter>Shaders</Filter>
-    </None>
-    <None Include="assets\shaders\debugFrag.glsl">
-      <Filter>Shaders\DebugShaders</Filter>
-    </None>
-    <None Include="assets\shaders\debugGeom.glsl">
-      <Filter>Shaders\DebugShaders</Filter>
-    </None>
-    <None Include="assets\shaders\debugGeom_PassThrough.glsl">
-      <Filter>Shaders\DebugShaders</Filter>
-    </None>
-    <None Include="assets\shaders\debugVert.glsl">
-      <Filter>Shaders\DebugShaders</Filter>
     </None>
   </ItemGroup>
 </Project>

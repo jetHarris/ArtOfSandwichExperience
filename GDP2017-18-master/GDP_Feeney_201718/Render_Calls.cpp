@@ -7,15 +7,12 @@
 #include <iostream>
 #include <sstream>
 
-// cSimpleAssimpSkinnedMesh class
-#include "assimp/cSimpleAssimpSkinnedMeshLoader_OneMesh.h"
-
-#include "cAnimationState.h"
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
 #include <time.h> 
 #include "cEmitter.h"
 #include "cSoundPlayer.h"
+#include "cShaderHolder.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -48,9 +45,7 @@ extern unsigned int SHADOW_HEIGHT;
 extern glm::mat4 lightSpaceMatrix;
 extern glm::mat4 lightProjection;
 extern glm::mat4 lightView;
-extern GLint uniLoc_bUseLighting;
 extern glm::vec3 lightDirection;
-extern GLint isParticleLocID;
 
 //default hold distances of objects
 float destinationDistance = 57.0f;
@@ -59,31 +54,32 @@ GLint curShaderProgID;
 
 
 //uniforms needed for passing information to the shader
-extern GLint uniLoc_mView;
-extern GLint uniLoc_mProjection;
-extern GLint lightSpaceMatrixLocation;
-extern GLint uniLoc_bFire;
-extern GLint uniLoc_bTitleScreen;
-extern GLint uniLoc_titleCounter;
-extern GLint uniLoc_bIsSplitscreen;
-extern GLint uniLoc_mModel;
-extern GLint uniLoc_mWorldInvTrans;
-extern GLint uniLoc_eyePosition;
-extern GLint uniLoc_ambientToDiffuseRatio;
-extern GLint uniLoc_materialSpecular;
-extern GLint uniLoc_materialDiffuse;
-extern GLint uniLoc_bIsSkyBoxObject;
-extern GLint uniLoc_bDiscardTexture;
-extern GLint uniLoc_Time;
-extern GLint uniLoc_bIsDebugWireFrameObject;
-extern GLint uniLoc_bIsLookedAt;
-extern GLint isReflectRefract_UniLoc;
-extern GLint reflectBlendRatio_UniLoc;
-extern GLint refractBlendRatio_UniLoc;
-extern GLint coefficientRefract_UniLoc;
-extern GLint bUseTextureAsDiffuse_UniLoc;
-extern GLint materialDiffuse_UniLoc;
-extern GLint lightDirectionLocID;
+//extern GLint uniLoc_mView;
+//extern GLint uniLoc_mProjection;
+//extern GLint lightSpaceMatrixLocation;
+//extern GLint uniLoc_bFire;
+//extern GLint uniLoc_bTitleScreen;
+//extern GLint uniLoc_titleCounter;
+//extern GLint uniLoc_bIsSplitscreen;
+//extern GLint uniLoc_mModel;
+//extern GLint uniLoc_mWorldInvTrans;
+//extern GLint uniLoc_eyePosition;
+//extern GLint uniLoc_ambientToDiffuseRatio;
+//extern GLint uniLoc_materialSpecular;
+//extern GLint uniLoc_materialDiffuse;
+//extern GLint uniLoc_bIsSkyBoxObject;
+//extern GLint uniLoc_bDiscardTexture;
+//extern GLint uniLoc_Time;
+//extern GLint uniLoc_bIsDebugWireFrameObject;
+//extern GLint uniLoc_bIsLookedAt;
+//extern GLint isReflectRefract_UniLoc;
+//extern GLint reflectBlendRatio_UniLoc;
+//extern GLint refractBlendRatio_UniLoc;
+//extern GLint coefficientRefract_UniLoc;
+//extern GLint bUseTextureAsDiffuse_UniLoc;
+//extern GLint materialDiffuse_UniLoc;
+//extern GLint lightDirectionLocID;
+extern cShaderHolder* mainShader;
 
 
 //freetype stuff
@@ -287,12 +283,12 @@ void DrawParticles(int type)
 	curShaderProgID = ::g_pShaderManager->getIDFromFriendlyName("mySexyShader");
 
 
-	glUniformMatrix4fv(uniLoc_mModel, 1, GL_FALSE,
+	glUniformMatrix4fv(mainShader->uniLoc_mModel, 1, GL_FALSE,
 		(const GLfloat*)glm::value_ptr(mModel));
 
 	glm::mat4 mWorldInTranpose = glm::inverse(glm::transpose(mModel));
 
-	glUniformMatrix4fv(uniLoc_mWorldInvTrans, 1, GL_FALSE,
+	glUniformMatrix4fv(mainShader->uniLoc_mWorldInvTrans, 1, GL_FALSE,
 		(const GLfloat*)glm::value_ptr(mWorldInTranpose));
 
 
@@ -312,46 +308,46 @@ void DrawParticles(int type)
 	{
 		eye = ::g_pTheCamera->getEyePosition();
 	}
-	glUniform3f(uniLoc_eyePosition, eye.x, eye.y, eye.z);
+	glUniform3f(mainShader->uniLoc_eyePosition, eye.x, eye.y, eye.z);
 
 	// Diffuse is often 0.2-0.3 the value of the diffuse
 
-	glUniform1f(uniLoc_ambientToDiffuseRatio, 0.2f);
+	glUniform1f(mainShader->uniLoc_ambientToDiffuseRatio, 0.2f);
 
 	// Specular: For now, set this colour to white, and the shininess to something high 
 	//	it's an exponent so 64 is pretty shinny (1.0 is "flat", 128 is excessively shiny)
 
-	glUniform4f(uniLoc_materialSpecular, 1.0f, 1.0f, 1.0f, 64.0f);
+	glUniform4f(mainShader->uniLoc_materialSpecular, 1.0f, 1.0f, 1.0f, 64.0f);
 
-	glUniform4f(uniLoc_materialDiffuse,
+	glUniform4f(mainShader->uniLoc_materialDiffuse,
 		pParticleObject->vecMeshes[0].debugDiffuseColour.r,
 		pParticleObject->vecMeshes[0].debugDiffuseColour.g,
 		pParticleObject->vecMeshes[0].debugDiffuseColour.b,
 		pParticleObject->vecMeshes[0].debugDiffuseColour.a);
 
 
-	glUniform1f(uniLoc_Time, totalRunningTime);
+	glUniform1f(mainShader->uniLoc_Time, totalRunningTime);
 
 
-	glUniform1f(uniLoc_bIsDebugWireFrameObject, 0.0f);	// FALSE
+	glUniform1f(mainShader->uniLoc_bIsDebugWireFrameObject, 0.0f);	// FALSE
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);	// Default
 
-	glUniform1f(uniLoc_bIsLookedAt, 0.0f);	// FALSE
+	glUniform1f(mainShader->uniLoc_bIsLookedAt, 0.0f);	// FALSE
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
 	glEnable(GL_DEPTH_TEST);		// Test for z and store in z buffer
 
-	glUniform1f(isReflectRefract_UniLoc, GL_FALSE);
+	glUniform1f(mainShader->isReflectRefract_UniLoc, GL_FALSE);
 
 	if (pParticleObject->useLighting)
-		glUniform1f(uniLoc_bUseLighting, GL_TRUE);
+		glUniform1f(mainShader->uniLoc_bUseLighting, GL_TRUE);
 	else
-		glUniform1f(uniLoc_bUseLighting, GL_FALSE);
+		glUniform1f(mainShader->uniLoc_bUseLighting, GL_FALSE);
 
-	glUniform1f(isParticleLocID, GL_TRUE);
-	glUniform1f(bUseTextureAsDiffuse_UniLoc, GL_FALSE);
+	glUniform1f(mainShader->isParticleLocID, GL_TRUE);
+	glUniform1f(mainShader->bUseTextureAsDiffuse_UniLoc, GL_FALSE);
 
 
 	glBindVertexArray(VAODrawInfo.VAO_ID);
@@ -363,7 +359,7 @@ void DrawParticles(int type)
 		liveCounter);
 	// Unbind that VAO
 	glBindVertexArray(0);
-	glUniform1f(isParticleLocID, GL_FALSE);
+	glUniform1f(mainShader->isParticleLocID, GL_FALSE);
 
 }
 //void DrawParticle(cParticle* pThePart, int type)
@@ -562,14 +558,14 @@ void RenderScene(std::vector< cGameObject* > &vec_pGOs, GLFWwindow* pGLFWWindow,
 
 
 
-	glUniformMatrix4fv(uniLoc_mView, 1, GL_FALSE,
+	glUniformMatrix4fv(mainShader->uniLoc_mView, 1, GL_FALSE,
 		(const GLfloat*)glm::value_ptr(matView));
-	glUniformMatrix4fv(uniLoc_mProjection, 1, GL_FALSE,
+	glUniformMatrix4fv(mainShader->uniLoc_mProjection, 1, GL_FALSE,
 		(const GLfloat*)glm::value_ptr(matProjection));
-	glUniformMatrix4fv(lightSpaceMatrixLocation, 1, GL_FALSE,
+	glUniformMatrix4fv(mainShader->lightSpaceMatrixLocation, 1, GL_FALSE,
 		(const GLfloat*)glm::value_ptr(lightSpaceMatrix));
 
-	glUniform3f(lightDirectionLocID, lightDirection.x, lightDirection.y, lightDirection.z);
+	glUniform3f(mainShader->lightDirectionLocID, lightDirection.x, lightDirection.y, lightDirection.z);
 
 	// Enable blend ("alpha") transparency for the scene
 	// NOTE: You "should" turn this OFF, then draw all NON-Transparent objects
@@ -766,17 +762,17 @@ void RenderScene(std::vector< cGameObject* > &vec_pGOs, GLFWwindow* pGLFWWindow,
 
 
 
-	glUniform1f(uniLoc_bIsSplitscreen, splitscreen);
+	glUniform1f(mainShader->uniLoc_bIsSplitscreen, splitscreen);
 	//glUniform1f(uniLoc_bFire, 1.0f);
 
 	if (type != 3 && type != 0) //not deferred render pass, and not shadow pass
 	{
 		DrawParticles(type);
-		glUniform1f(uniLoc_bFire, 0.0f);
+		glUniform1f(mainShader->uniLoc_bFire, 0.0f);
 		DrawGoalSandwhiches(type);
 	}
 
-	glUniform1f(uniLoc_bFire, 0.0f);
+	glUniform1f(mainShader->uniLoc_bFire, 0.0f);
 
 	//print stuff to screen
 	if (type == 0)
@@ -942,12 +938,12 @@ void DrawMesh(sMeshDrawInfo &theMesh, cGameObject* pTheGO, int type)
 	curShaderProgID = ::g_pShaderManager->getIDFromFriendlyName("mySexyShader");
 
 
-	glUniformMatrix4fv(uniLoc_mModel, 1, GL_FALSE,
+	glUniformMatrix4fv(mainShader->uniLoc_mModel, 1, GL_FALSE,
 		(const GLfloat*)glm::value_ptr(mModel));
 
 	glm::mat4 mWorldInTranpose = glm::inverse(glm::transpose(mModel));
 
-	glUniformMatrix4fv(uniLoc_mWorldInvTrans, 1, GL_FALSE,
+	glUniformMatrix4fv(mainShader->uniLoc_mWorldInvTrans, 1, GL_FALSE,
 		(const GLfloat*)glm::value_ptr(mWorldInTranpose));
 
 
@@ -969,7 +965,7 @@ void DrawMesh(sMeshDrawInfo &theMesh, cGameObject* pTheGO, int type)
 	{
 		eye = ::g_pTheCamera->getEyePosition();
 	}
-	glUniform3f(uniLoc_eyePosition, eye.x, eye.y, eye.z);
+	glUniform3f(mainShader->uniLoc_eyePosition, eye.x, eye.y, eye.z);
 
 
 
@@ -977,14 +973,14 @@ void DrawMesh(sMeshDrawInfo &theMesh, cGameObject* pTheGO, int type)
 
 	// Diffuse is often 0.2-0.3 the value of the diffuse
 
-	glUniform1f(uniLoc_ambientToDiffuseRatio, 0.2f);
+	glUniform1f(mainShader->uniLoc_ambientToDiffuseRatio, 0.2f);
 
 	// Specular: For now, set this colour to white, and the shininess to something high 
 	//	it's an exponent so 64 is pretty shinny (1.0 is "flat", 128 is excessively shiny)
 
-	glUniform4f(uniLoc_materialSpecular, 1.0f, 1.0f, 1.0f, 64.0f);
+	glUniform4f(mainShader->uniLoc_materialSpecular, 1.0f, 1.0f, 1.0f, 64.0f);
 
-	glUniform4f(uniLoc_materialDiffuse,
+	glUniform4f(mainShader->uniLoc_materialDiffuse,
 		theMesh.debugDiffuseColour.r,
 		theMesh.debugDiffuseColour.g,
 		theMesh.debugDiffuseColour.b,
@@ -1010,41 +1006,41 @@ void DrawMesh(sMeshDrawInfo &theMesh, cGameObject* pTheGO, int type)
 	{
 		if (titleScreen)
 		{
-			glUniform1f(uniLoc_bTitleScreen, GL_TRUE);
-			glUniform1f(uniLoc_titleCounter, titleScreenCounter);
+			glUniform1f(mainShader->uniLoc_bTitleScreen, GL_TRUE);
+			glUniform1f(mainShader->uniLoc_titleCounter, titleScreenCounter);
 		}
 		else
-			glUniform1f(uniLoc_bTitleScreen, GL_FALSE);
+			glUniform1f(mainShader->uniLoc_bTitleScreen, GL_FALSE);
 	}
 
 	if (theMesh.bIsSkyBoxObject)
 	{
-		glUniform1f(uniLoc_bIsSkyBoxObject, GL_TRUE);
+		glUniform1f(mainShader->uniLoc_bIsSkyBoxObject, GL_TRUE);
 	}
 	else
 	{
-		glUniform1f(uniLoc_bIsSkyBoxObject, GL_FALSE);
+		glUniform1f(mainShader->uniLoc_bIsSkyBoxObject, GL_FALSE);
 	}
 
 	if (pTheGO->bDiscardTexture)
 	{
-		glUniform1f(uniLoc_bDiscardTexture, 1.0f);	// TRUE
+		glUniform1f(mainShader->uniLoc_bDiscardTexture, 1.0f);	// TRUE
 	}
 	else
 	{
-		glUniform1f(uniLoc_bDiscardTexture, 0.0f);	// FALSE
+		glUniform1f(mainShader->uniLoc_bDiscardTexture, 0.0f);	// FALSE
 	}
-	glUniform1f(uniLoc_Time, totalRunningTime);
+	glUniform1f(mainShader->uniLoc_Time, totalRunningTime);
 
 	// Wireframe?
 	if (theMesh.bDrawAsWireFrame)
 	{
-		glUniform1f(uniLoc_bIsDebugWireFrameObject, 1.0f);	// TRUE
+		glUniform1f(mainShader->uniLoc_bIsDebugWireFrameObject, 1.0f);	// TRUE
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);	// Default
 	}
 	else
 	{
-		glUniform1f(uniLoc_bIsDebugWireFrameObject, 0.0f);	// FALSE
+		glUniform1f(mainShader->uniLoc_bIsDebugWireFrameObject, 0.0f);	// FALSE
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);	// Default
 	}
 
@@ -1053,11 +1049,11 @@ void DrawMesh(sMeshDrawInfo &theMesh, cGameObject* pTheGO, int type)
 	// Wireframe?
 	if (pTheGO->isLookedAt)
 	{
-		glUniform1f(uniLoc_bIsLookedAt, 1.0f);	// TRUE
+		glUniform1f(mainShader->uniLoc_bIsLookedAt, 1.0f);	// TRUE
 	}
 	else
 	{
-		glUniform1f(uniLoc_bIsLookedAt, 0.0f);	// FALSE
+		glUniform1f(mainShader->uniLoc_bIsLookedAt, 0.0f);	// FALSE
 	}
 
 	// GL_CULL_FACE
@@ -1088,25 +1084,25 @@ void DrawMesh(sMeshDrawInfo &theMesh, cGameObject* pTheGO, int type)
 	// Is this the reflective sphere
 	if (theMesh.bIsEnvirMapped)
 	{
-		glUniform1f(isReflectRefract_UniLoc, GL_TRUE);
+		glUniform1f(mainShader->isReflectRefract_UniLoc, GL_TRUE);
 	}
 	else
 	{
-		glUniform1f(isReflectRefract_UniLoc, GL_FALSE);
+		glUniform1f(mainShader->isReflectRefract_UniLoc, GL_FALSE);
 	}
 	// 
-	glUniform1f(reflectBlendRatio_UniLoc, theMesh.reflectBlendRatio);
-	glUniform1f(refractBlendRatio_UniLoc, theMesh.refractBlendRatio);
-	glUniform1f(coefficientRefract_UniLoc, theMesh.coefficientRefract);
+	glUniform1f(mainShader->reflectBlendRatio_UniLoc, theMesh.reflectBlendRatio);
+	glUniform1f(mainShader->refractBlendRatio_UniLoc, theMesh.refractBlendRatio);
+	glUniform1f(mainShader->coefficientRefract_UniLoc, theMesh.coefficientRefract);
 	// And more environment things
 
 	if (pTheGO->useLighting)
-		glUniform1f(uniLoc_bUseLighting, GL_TRUE);
+		glUniform1f(mainShader->uniLoc_bUseLighting, GL_TRUE);
 	else
-		glUniform1f(uniLoc_bUseLighting, GL_FALSE);
+		glUniform1f(mainShader->uniLoc_bUseLighting, GL_FALSE);
 
 
-	glUniform1f(bUseTextureAsDiffuse_UniLoc, GL_TRUE);
+	glUniform1f(mainShader->bUseTextureAsDiffuse_UniLoc, GL_TRUE);
 
 
 	glBindVertexArray(VAODrawInfo.VAO_ID);
