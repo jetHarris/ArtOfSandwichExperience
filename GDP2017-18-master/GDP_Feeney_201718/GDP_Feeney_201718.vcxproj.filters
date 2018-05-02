@@ -19,12 +19,6 @@
     <Filter Include="Global">
       <UniqueIdentifier>{5b036a86-ffcf-40b2-8016-60d37a7ba79e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Persist">
-      <UniqueIdentifier>{df010c60-dbde-4437-9d1b-331dc08f3541}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Persist\SQLite">
-      <UniqueIdentifier>{3c72da47-c08e-4f96-b212-44cb9c3dece2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{01d1d4e8-0461-4272-a1e0-9f560d40d1dd}</UniqueIdentifier>
     </Filter>
@@ -37,9 +31,6 @@
     <Filter Include="Models\PlyLoader">
       <UniqueIdentifier>{e09b5a02-f893-42b3-b295-cb29c4d9deac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Persist\JSON">
-      <UniqueIdentifier>{133aa164-9ca9-491b-b0e6-573056f1746d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{c2e73f13-01c1-48bc-be70-ab36e07d5316}</UniqueIdentifier>
     </Filter>
@@ -49,9 +40,6 @@
     <Filter Include="Scene and Game Managers">
       <UniqueIdentifier>{a88a3da5-d048-4e42-84f8-57a639bbacae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua">
-      <UniqueIdentifier>{f8ba1d80-0de6-47a3-8cb6-03aad50b30c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Mesh">
       <UniqueIdentifier>{33a4e1b8-cf7f-456a-b56a-e498d995c21d}</UniqueIdentifier>
     </Filter>
@@ -60,12 +48,6 @@
     </Filter>
     <Filter Include="Error">
       <UniqueIdentifier>{1dc855b8-96b2-4b10-9cb9-efafc30e11d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Persist\NVPair">
-      <UniqueIdentifier>{9c4b7c66-dc39-47c3-a807-288823e06f19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Persist\RnRXML">
-      <UniqueIdentifier>{63366a6c-f06b-48a4-a6f6-ed5eff2a963d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Texture">
       <UniqueIdentifier>{5be69afd-2a1f-4fbd-95d3-db710b5e0b50}</UniqueIdentifier>
@@ -117,12 +99,6 @@
     <ClCompile Include="cBasicTextureManager_FreeImage.cpp">
       <Filter>Source Files\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Persist\cPersist.cpp">
-      <Filter>Persist</Filter>
-    </ClCompile>
-    <ClCompile Include="Persist\cPersistImpFactory.cpp">
-      <Filter>Persist</Filter>
-    </ClCompile>
     <ClCompile Include="cCamera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
@@ -159,12 +135,6 @@
     <ClCompile Include="cGameObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\cPhysicsWorld.cpp">
-      <Filter>Physics_AABB</Filter>
-    </ClCompile>
-    <ClCompile Include="Lua\cLuaBrain.cpp">
-      <Filter>Lua</Filter>
-    </ClCompile>
     <ClCompile Include="cMesh.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
@@ -192,23 +162,8 @@
     <ClCompile Include="Texture\cBasicTextureManager_OLD_DONT_INCLUDE.cpp">
       <Filter>Source Files\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Persist\JSON\cPersistImpRnRJSON.cpp">
-      <Filter>Persist\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="Persist\SQLite\cPersistImpSQLiteGDPAdapter.cpp">
-      <Filter>Persist\SQLite</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\CStringUtils.cpp">
       <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Persist\CNVPair.cpp">
-      <Filter>Persist\NVPair</Filter>
-    </ClCompile>
-    <ClCompile Include="Persist\RnRXML\wRnRXML.cpp">
-      <Filter>Persist\RnRXML</Filter>
-    </ClCompile>
-    <ClCompile Include="Persist\RnRXML\RnRXML.cpp">
-      <Filter>Persist\RnRXML</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\CStringHelper.cpp">
       <Filter>Utilities</Filter>
@@ -266,12 +221,6 @@
     <ClInclude Include="Texture\CTextureFromBMP.h">
       <Filter>Source Files\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Persist\cPersist.h">
-      <Filter>Persist</Filter>
-    </ClInclude>
-    <ClInclude Include="Persist\iPersistImp.h">
-      <Filter>Persist</Filter>
-    </ClInclude>
     <ClInclude Include="cCamera.h">
       <Filter>Camera</Filter>
     </ClInclude>
@@ -314,15 +263,6 @@
     <ClInclude Include="cGameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\cPhysicsWorld.h">
-      <Filter>Physics_AABB</Filter>
-    </ClInclude>
-    <ClInclude Include="Lua\cLuaBrain.h">
-      <Filter>Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Lua\cLuaConnector.h">
-      <Filter>Lua</Filter>
-    </ClInclude>
     <ClInclude Include="cMesh.h">
       <Filter>Mesh</Filter>
     </ClInclude>
@@ -350,26 +290,8 @@
     <ClInclude Include="Texture\cBasicTextureManager_OLD_DONT_INCLUDE.h">
       <Filter>Source Files\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Persist\JSON\cRnRJASON.h">
-      <Filter>Persist\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="Persist\JSON\cPersistImpRnRJSON.h">
-      <Filter>Persist\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="Persist\SQLite\cPersistImpSQLiteGDPAdapter.h">
-      <Filter>Persist\SQLite</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\CStringUtils.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Persist\CNVPair.h">
-      <Filter>Persist\NVPair</Filter>
-    </ClInclude>
-    <ClInclude Include="Persist\RnRXML\wRnRXML.h">
-      <Filter>Persist\RnRXML</Filter>
-    </ClInclude>
-    <ClInclude Include="Persist\RnRXML\RnRXML.h">
-      <Filter>Persist\RnRXML</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\CStringHelper.h">
       <Filter>Utilities</Filter>

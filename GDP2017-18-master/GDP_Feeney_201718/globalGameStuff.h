@@ -11,7 +11,6 @@
 #include "cLightManager.h"
 #include "cModelAssetLoader.h"
 #include "cCamera.h"
-#include "Physics/cPhysicsWorld.h"
 
 // ******************************************************************
 // These require the inclusion of the OpenGL and-or GLFW headers

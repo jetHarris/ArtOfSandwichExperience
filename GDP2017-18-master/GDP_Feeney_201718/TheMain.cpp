@@ -31,9 +31,6 @@
 #include "cEmitter.h"
 #include "cSoundPlayer.h"
 
-
-//#include "Physics/Physics.h"	// Physics collision detection functions
-#include "Physics/cPhysicsWorld.h"
 #include "cLightManager.h"
 
 // Include all the things that are accessed in other files

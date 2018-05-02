@@ -101,7 +101,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;lua5.3.3-static_32.lib;Persist_SQLiteGDPInterface.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;lua5.3.3-static_32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,7 +115,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freetype271MT.lib;fmod64_vc.lib;BulletPhysics2.lib;glfw3_64.lib;lua5.3.3-static_64.lib;Persist_SQLiteGDPInterface.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype271MT.lib;fmod64_vc.lib;BulletPhysics2.lib;glfw3_64.lib;lua5.3.3-static_64.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +133,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;lua5.3.3-static_32.lib;Persist_SQLiteGDPInterface.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;lua5.3.3-static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,7 +151,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freetype271MT.lib;fmod64_vc.lib;BulletPhysics2.lib;glfw3_64.lib;lua5.3.3-static_64.lib;Persist_SQLiteGDPInterface.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype271MT.lib;fmod64_vc.lib;BulletPhysics2.lib;glfw3_64.lib;lua5.3.3-static_64.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -181,20 +181,11 @@
     <ClCompile Include="Error\CErrorLog.cpp" />
     <ClCompile Include="Error\COpenGLError.cpp" />
     <ClCompile Include="GLFW_keyboardCallback.cpp" />
-    <ClCompile Include="Lua\cLuaBrain.cpp" />
     <ClCompile Include="MediaObject.cpp" />
     <ClCompile Include="ModelUtilities.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Persist\CNVPair.cpp" />
-    <ClCompile Include="Persist\cPersist.cpp" />
-    <ClCompile Include="Persist\cPersistImpFactory.cpp" />
-    <ClCompile Include="Persist\JSON\cPersistImpRnRJSON.cpp" />
-    <ClCompile Include="Persist\RnRXML\RnRXML.cpp" />
-    <ClCompile Include="Persist\RnRXML\wRnRXML.cpp" />
-    <ClCompile Include="Persist\SQLite\cPersistImpSQLiteGDPAdapter.cpp" />
     <ClCompile Include="Physics\cPhysicalProperties.cpp" />
-    <ClCompile Include="Physics\cPhysicsWorld.cpp" />
     <ClCompile Include="Physics\Physics.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -247,19 +238,8 @@
     <ClInclude Include="Error\COpenGLError.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Input\iInput.h" />
-    <ClInclude Include="Lua\cLuaBrain.h" />
-    <ClInclude Include="Lua\cLuaConnector.h" />
     <ClInclude Include="MediaObject.h" />
-    <ClInclude Include="Persist\CNVPair.h" />
-    <ClInclude Include="Persist\cPersist.h" />
-    <ClInclude Include="Persist\iPersistImp.h" />
-    <ClInclude Include="Persist\JSON\cPersistImpRnRJSON.h" />
-    <ClInclude Include="Persist\JSON\cRnRJASON.h" />
-    <ClInclude Include="Persist\RnRXML\RnRXML.h" />
-    <ClInclude Include="Persist\RnRXML\wRnRXML.h" />
-    <ClInclude Include="Persist\SQLite\cPersistImpSQLiteGDPAdapter.h" />
     <ClInclude Include="Physics\cPhysicalProperties.h" />
-    <ClInclude Include="Physics\cPhysicsWorld.h" />
     <ClInclude Include="Physics\iPhysicalObject.h" />
     <ClInclude Include="Physics\Physics.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
