@@ -7,8 +7,6 @@ in vec3 fVertNormal;			// Also in "world" (no view or projection)
 in vec3 fVecWorldPosition;		// 
 in vec4 fUV_X2;					// Added: UV 1 and 2 to fragment
 
-in vec3 fTangent;		// For bump (or normal) mapping
-in vec3 fBitangent;		// For bump (or normal) mapping
 in float slicedFrag;
 in vec4 pColourFrag;
 

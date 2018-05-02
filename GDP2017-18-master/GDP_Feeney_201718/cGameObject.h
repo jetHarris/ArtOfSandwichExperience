@@ -22,7 +22,7 @@
 class cSimpleAssimpSkinnedMesh;	// Forward declare
 class cAnimationState;			// Forward declare 
 
-class sVertex_xyz_rgba_n_uv2_bt_4Bones;
+class sVertex_xyz_rgba_n_uv2;
 class cTriangle;
 
 enum ObjectType
@@ -63,11 +63,11 @@ public:
 	//****************************************************************************************
 
 	bool Slice(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal);
-	bool RightSideOfPlane(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex, glm::vec3&const pointOnPlane, glm::vec3&const testNormal);
-	void CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices, std::vector<cTriangle>* triangles);
-	void ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices, std::vector<cTriangle>* triangles, bool makePhysics);
-	glm::vec3 FindIntersectionPoint(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertexIn, sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertexOut, glm::vec3&const pointOnPlane, glm::vec3&const testNormal);
-	glm::vec3 AveragePoint(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex1, sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex2);
+	bool RightSideOfPlane(sVertex_xyz_rgba_n_uv2&const vertex, glm::vec3&const pointOnPlane, glm::vec3&const testNormal);
+	void CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2>* vertices, std::vector<cTriangle>* triangles);
+	void ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2>* vertices, std::vector<cTriangle>* triangles, bool makePhysics);
+	glm::vec3 FindIntersectionPoint(sVertex_xyz_rgba_n_uv2&const vertexIn, sVertex_xyz_rgba_n_uv2&const vertexOut, glm::vec3&const pointOnPlane, glm::vec3&const testNormal);
+	glm::vec3 AveragePoint(sVertex_xyz_rgba_n_uv2&const vertex1, sVertex_xyz_rgba_n_uv2&const vertex2);
 
 	//for threading the slice
 	void loadMeshIntoVAONow();

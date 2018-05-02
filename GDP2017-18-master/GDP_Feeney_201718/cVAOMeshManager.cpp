@@ -6,19 +6,8 @@
 
 
 #include "cMesh.h"	// NOTE: This is in the CPP file, NOT the .h file
-
-//// The vertex layout as defined by the shader
-//// Where's the Best Place to put this?? 
-//// (good question)
-//class cVertex
-//{
-//public:
-//    float x, y, z;		// Position (vec2)	float x, y;	
-//    float r, g, b;		// Colour (vec3)
-//	float nx, ny, nz;	// Now with normals!
-//};
-//#include "sVertex_xyz_rgba_n_uv2_bt.h"			
-#include "sVertex_xyz_rgba_n_uv2_bt_4Bones.h"
+	
+#include "sVertex_xyz_rgba_n_uv2.h"
 
 cVAOMeshManager::cVAOMeshManager()
 {
@@ -63,10 +52,7 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
     glGenBuffers(1, &(theVAOInfo.vertex_buffer_ID) );
     glBindBuffer(GL_ARRAY_BUFFER, theVAOInfo.vertex_buffer_ID);
 
-	// Allocate the global vertex array
-	//cVertex* pVertices = new cVertex[theMesh.numberOfVertices];
-	//sVertex_xyz_rgba_n_uv2_bt* pVertices = new sVertex_xyz_rgba_n_uv2_bt[theMesh.numberOfVertices];
-	sVertex_xyz_rgba_n_uv2_bt_4Bones * pVertices = new sVertex_xyz_rgba_n_uv2_bt_4Bones[theMesh.numberOfVertices];
+	sVertex_xyz_rgba_n_uv2 * pVertices = new sVertex_xyz_rgba_n_uv2[theMesh.numberOfVertices];
 
 	for ( int index = 0; index < theMesh.numberOfVertices; index++ )
 	{
@@ -89,14 +75,6 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
 		pVertices[index].u2 = theMesh.pVertices[index].u2;
 		pVertices[index].v2 = theMesh.pVertices[index].v2;
 
-		pVertices[index].bx = theMesh.pVertices[index].bx;
-		pVertices[index].by = theMesh.pVertices[index].by;
-		pVertices[index].bz = theMesh.pVertices[index].bz;
-
-		pVertices[index].tx = theMesh.pVertices[index].tx;
-		pVertices[index].ty = theMesh.pVertices[index].ty;
-		pVertices[index].tz = theMesh.pVertices[index].tz;
-
 		pVertices[index].sliced = theMesh.pVertices[index].sliced;
 
 		// Or, since these are the same, you could simply assign one to the other...
@@ -106,7 +84,7 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
 	// Copy the local vertex array into the GPUs memory
 	//int sizeOfGlobalVertexArrayInBytes = sizeof(cVertex) * theMesh.numberOfVertices;
 	//int sizeOfGlobalVertexArrayInBytes = sizeof(sVertex_xyz_rgba_n_uv2_bt) * theMesh.numberOfVertices;
-	int sizeOfGlobalVertexArrayInBytes = sizeof(sVertex_xyz_rgba_n_uv2_bt_4Bones) * theMesh.numberOfVertices;
+	int sizeOfGlobalVertexArrayInBytes = sizeof(sVertex_xyz_rgba_n_uv2) * theMesh.numberOfVertices;
     glBufferData(GL_ARRAY_BUFFER, 
 				 sizeOfGlobalVertexArrayInBytes,		// sizeof(vertices), 
 				 pVertices, 
@@ -169,11 +147,11 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
 
 	// Size of the vertex we are using in the array.
 	// This is called the "stride" of the vertices in the vertex buffer
-	const unsigned int VERTEX_SIZE_OR_STRIDE_IN_BYTES = sizeof(sVertex_xyz_rgba_n_uv2_bt_4Bones);
+	const unsigned int VERTEX_SIZE_OR_STRIDE_IN_BYTES = sizeof(sVertex_xyz_rgba_n_uv2);
 
 	{//STARTOF: "in vec3 vPos;" or "float x, y, z;"
 		glEnableVertexAttribArray(vpos_location);
-		const unsigned int OFFSET_TO_X_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2_bt_4Bones, x );
+		const unsigned int OFFSET_TO_X_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2, x );
 		glVertexAttribPointer(vpos_location, 
 							  3,				// now vec3, not vec2   
 							  GL_FLOAT, 
@@ -187,7 +165,7 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
 
 	{//STARTOF: "in vec4 vCol;" or "float r, g, b, a;"
 		glEnableVertexAttribArray(vcol_location);
-		const unsigned int OFFSET_TO_R_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2_bt_4Bones, r );
+		const unsigned int OFFSET_TO_R_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2, r );
 		glVertexAttribPointer(vcol_location, 
 							  4,				// Was 3, but now has alpha
 							  GL_FLOAT, 
@@ -198,7 +176,7 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
 
 	{//STARTOF: "in vec3 vNorm;" or "float nx, ny, nz;"
 		glEnableVertexAttribArray(vnorm_location);
-		const unsigned int OFFSET_TO_NX_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2_bt_4Bones, nx );
+		const unsigned int OFFSET_TO_NX_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2, nx );
 		glVertexAttribPointer(vnorm_location, 
 							  3, 
 							  GL_FLOAT, 
@@ -209,7 +187,7 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
 
 	{//STARTOF: "in vec4 uvX2;" or "float u1, v1, u2, v2;"
 		glEnableVertexAttribArray(vUVx2_location);
-		const unsigned int OFFSET_TO_UVs_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2_bt_4Bones, u1 );
+		const unsigned int OFFSET_TO_UVs_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2, u1 );
 		glVertexAttribPointer(vUVx2_location,
 							  4,				// because "vec4"
 							  GL_FLOAT,			// vec is a float 
@@ -218,33 +196,11 @@ bool cVAOMeshManager::loadMeshIntoVAO( cMesh &theMesh, int shaderID, bool bKeepM
 							  reinterpret_cast<void*>(static_cast<uintptr_t>(OFFSET_TO_UVs_IN_CVERTEX)) );	// 64-bit
 	}//ENDOF: "in vec4 uvX2;" or "float u1, v1, u2, v2;"
 																											// *******************************************************************
-	{//STARTOF: "in vec3 vTangent;" or "float tx, ty, tz;"
-		glEnableVertexAttribArray(vTangent_location);
-		const unsigned int OFFSET_TO_vTangent_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2_bt_4Bones, tx);
-		glVertexAttribPointer(vTangent_location,
-							  3,				// because "vec3"
-							  GL_FLOAT,			// vec is a float 
-							  GL_FALSE,			// normalize or not
-							  VERTEX_SIZE_OR_STRIDE_IN_BYTES,			
-							  reinterpret_cast<void*>(static_cast<uintptr_t>( OFFSET_TO_vTangent_IN_CVERTEX )) );	// 64-bit
-	}//ENDOF: "in vec3 vTangent;" or "float tx, ty, tz;"
-
-	{//STARTOF: "in vec3 vBitangent;" or "float bx, by, bz;"
-		//GLuint vBitangent_location = glGetAttribLocation(shaderID, "vBitangent");			// in vec3 vBitangent;
-		glEnableVertexAttribArray(vBitangent_location);
-		const unsigned int OFFSET_TO_vBitangent_IN_CVERTEX = offsetof(sVertex_xyz_rgba_n_uv2_bt_4Bones, bx);
-		glVertexAttribPointer(vBitangent_location,
-							  3,				// because "vec3"
-							  GL_FLOAT,			// vec is a float 
-							  GL_FALSE,			// normalize or not
-							  VERTEX_SIZE_OR_STRIDE_IN_BYTES,			
-							  reinterpret_cast<void*>(static_cast<uintptr_t>( OFFSET_TO_vBitangent_IN_CVERTEX )) );	// 64-bit
-	}//ENDOF: "in vec3 vBitangent;" or "float bx, by, bz;"
 
 	{//STARTOF: "in bool sliced;" or 
 	 //GLuint vBitangent_location = glGetAttribLocation(shaderID, "vBitangent");			// in vec3 vBitangent;
 		glEnableVertexAttribArray(sliced_location);
-		const unsigned int OFFSET_TO_SLICED = offsetof(sVertex_xyz_rgba_n_uv2_bt_4Bones, sliced);
+		const unsigned int OFFSET_TO_SLICED = offsetof(sVertex_xyz_rgba_n_uv2, sliced);
 		glVertexAttribPointer(sliced_location,
 			1,				// because "vec3"
 			GL_FLOAT,			// vec is a float 

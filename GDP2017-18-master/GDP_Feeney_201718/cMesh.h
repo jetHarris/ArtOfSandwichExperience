@@ -3,7 +3,7 @@
 
 //#include "cVertex_xyz_rgb_n.h"
 //#include "sVertex_xyz_rgba_n_uv2_bt.h"
-#include "sVertex_xyz_rgba_n_uv2_bt_4Bones.h"
+#include "sVertex_xyz_rgba_n_uv2.h"
 #include "cTriangle.h" 
 
 //#define MAX_VERTEX_ARRAY_SIZE 2048
@@ -22,16 +22,10 @@ public:
 
 	std::string name;	// the friendly name of the mesh
 
-	// Array of vertices 
-//	cVertex_xyz_rgb vertices[MAX_VERTEX_ARRAY_SIZE]; // Stack
-//	cVertex_xyz_rgb_n* pVertices;						// Heap
-//	sVertex_xyz_rgba_n_uv2_bt* pVertices;				// Heap
-	sVertex_xyz_rgba_n_uv2_bt_4Bones* pVertices;
+	sVertex_xyz_rgba_n_uv2* pVertices;
 	int numberOfVertices;
 
-	// Array of triangles (indices)
-//	cTriangle triangles[MAX_INDEX_ARRAY_SIZE];	// Stack
-	cTriangle* pTriangles;						// Heap
+	cTriangle* pTriangles;
 	int numberOfTriangles;
 
 	// Takes an indexed model and makes just a vertex array model

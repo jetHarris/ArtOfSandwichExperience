@@ -12,8 +12,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 
-//#include "vert_XYZ_RGBA_N_STU_TanBi_4Bones.h"
-#include "../sVertex_xyz_rgba_n_uv2_bt_4Bones.h"
+#include "../sVertex_xyz_rgba_n_uv2.h"
 
 // Used by the game object and the rendering
 #include "../cMesh.h"			// For loading into the VAO manager

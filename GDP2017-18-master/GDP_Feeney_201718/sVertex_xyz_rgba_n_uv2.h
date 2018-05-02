@@ -8,18 +8,14 @@
 // This matches the shader layout for the vertex
 #include <cstring>		// for memset
 
-static const unsigned int NUMBEROFBONES = 4;
-
-struct sVertex_xyz_rgba_n_uv2_bt_4Bones
+struct sVertex_xyz_rgba_n_uv2
 {
-	sVertex_xyz_rgba_n_uv2_bt_4Bones() :
+	sVertex_xyz_rgba_n_uv2() :
 		x(0.0f), y(0.0f), z(0.0f),
 		r(0.0f), g(0.0f), b(0.0f), a(1.0f),		// Note alpha is 1.0
 		nx(0.0f), ny(0.0f), nz(0.0f),
 		u1(0.0f), v1(0.0f),
 		u2(0.0f), v2(0.0f),
-		tx(0.0f), ty(0.0f), tz(0.0f),
-		bx(0.0f), by(0.0f), bz(0.0f),
 		sliced (0.0f)
 	{
 
@@ -32,9 +28,6 @@ struct sVertex_xyz_rgba_n_uv2_bt_4Bones
 	float nx, ny, nz;								// 12 (40)
 	float u1, v1;									// 8  (48)
 	float u2, v2;									// 8  (56)
-	float tx, ty, tz;	// tangent					// 12 (68)
-	float bx, by, bz;	// bi-normal				// 12 (80)
-	//bool sliced = false;
 	float sliced;
 };
 

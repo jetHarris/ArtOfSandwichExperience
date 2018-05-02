@@ -253,13 +253,10 @@
     <ClInclude Include="sMeshDrawInfo.h" />
     <ClInclude Include="sTextureBindBlendInfo.h" />
     <ClInclude Include="sVAOInfo.h" />
-    <ClInclude Include="sVertex_xyz_rgba_n_uv2_bt.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="globalGameStuff.h" />
     <ClInclude Include="globalOpenGL_GLFW.h" />
     <ClInclude Include="ModelUtilities.h" />
-    <ClInclude Include="sVertex_xyz_rgba_n_uv2_bt_4Bones.h" />
+    <ClInclude Include="sVertex_xyz_rgba_n_uv2.h" />
     <ClInclude Include="Texture\C24BitBMPpixel.h" />
     <ClInclude Include="Texture\cBasicTextureManager_OLD_DONT_INCLUDE.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

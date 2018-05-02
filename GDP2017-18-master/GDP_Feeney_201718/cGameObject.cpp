@@ -6,7 +6,7 @@
 #include "cMesh.h"
 #include "cTriangle.h"
 #include "cVAOMeshManager.h"
-#include "sVertex_xyz_rgba_n_uv2_bt_4Bones.h"
+#include "sVertex_xyz_rgba_n_uv2.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm\gtx\intersect.hpp>
 #include "cShaderManager.h"
@@ -155,7 +155,7 @@ void cGameObject::adjQOrientationEuler(glm::vec3 newOrientationEuler, bool bIsDe
 	return;
 }
 
-bool cGameObject::RightSideOfPlane(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex, glm::vec3&const pointOnPlane, glm::vec3&const testNormal)
+bool cGameObject::RightSideOfPlane(sVertex_xyz_rgba_n_uv2&const vertex, glm::vec3&const pointOnPlane, glm::vec3&const testNormal)
 {
 	//will have to apply object translation, orientation, and scale
 	glm::vec4 tempPos4 = glm::vec4(vertex.x, vertex.y, vertex.z, 1);
@@ -176,7 +176,7 @@ bool cGameObject::RightSideOfPlane(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex
 	return false;
 }
 
-void cGameObject::CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices, std::vector<cTriangle>* triangles)
+void cGameObject::CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2>* vertices, std::vector<cTriangle>* triangles)
 {
 	//go through all the triangles making some sort of list of ids of vertices that are still in the model
 	std::set<int> goodVertexIds;
@@ -188,7 +188,7 @@ void cGameObject::CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>
 		goodVertexIds.insert((*triangles)[i].vertex_ID_2);
 	}
 
-	std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* newVertices = new std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>();
+	std::vector<sVertex_xyz_rgba_n_uv2>* newVertices = new std::vector<sVertex_xyz_rgba_n_uv2>();
 	std::map<int, int> deletedOffsets;
 	int offset = 0;
 	int verticesSize = vertices->size();
@@ -223,7 +223,7 @@ void cGameObject::CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>
 	}
 }
 
-void cGameObject::ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices, std::vector<cTriangle>* triangles, bool makePhysics)
+void cGameObject::ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2>* vertices, std::vector<cTriangle>* triangles, bool makePhysics)
 {
 	glm::vec3 holderPosition = this->getPosition();
 	glm::vec3 maxXYZ = glm::vec3(-9999, -9999, -9999);
@@ -402,7 +402,7 @@ void SphereEdge(glm::vec3 & pointInSphere, glm::vec3& center, float& radius)
 	pointInSphere = (glm::normalize(pointInSphere - center))* (radius + 0.1f) + center;
 }
 
-glm::vec3 cGameObject::FindIntersectionPoint(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertexIn, sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertexOut, glm::vec3&const pointOnPlane, glm::vec3&const testNormal)
+glm::vec3 cGameObject::FindIntersectionPoint(sVertex_xyz_rgba_n_uv2&const vertexIn, sVertex_xyz_rgba_n_uv2&const vertexOut, glm::vec3&const pointOnPlane, glm::vec3&const testNormal)
 {
 	glm::vec4 tempPos4In = glm::vec4(vertexIn.x, vertexIn.y, vertexIn.z, 1);
 	tempPos4In = tempPos4In * this->worldMatrix;
@@ -433,7 +433,7 @@ glm::vec3 cGameObject::FindIntersectionPoint(sVertex_xyz_rgba_n_uv2_bt_4Bones&co
 	return returnVector;
 }
 
-glm::vec3 cGameObject::AveragePoint(sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex1, sVertex_xyz_rgba_n_uv2_bt_4Bones&const vertex2)
+glm::vec3 cGameObject::AveragePoint(sVertex_xyz_rgba_n_uv2&const vertex1, sVertex_xyz_rgba_n_uv2&const vertex2)
 {
 	glm::vec4 tempPos4In = glm::vec4(vertex1.x, vertex1.y, vertex1.z, 1);
 	tempPos4In = tempPos4In * this->worldMatrix;
@@ -483,21 +483,15 @@ void cGameObject::calcXYZDepths(float & xIn, float & yIn, float & zIn)
 
 }
 
-void CopyVertexValues(sVertex_xyz_rgba_n_uv2_bt_4Bones* first, sVertex_xyz_rgba_n_uv2_bt_4Bones* second)
+void CopyVertexValues(sVertex_xyz_rgba_n_uv2* first, sVertex_xyz_rgba_n_uv2* second)
 {
 	first->a = second->a;
 	first->b = second->b;
-	first->bx = second->bx;
-	first->by = second->by;
-	first->bz = second->bz;
 	first->g = second->g;
 	first->nx = second->nx;
 	first->ny = second->ny;
 	first->nz = second->nz;
 	first->r = second->r;
-	first->tx = second->tx;
-	first->ty = second->ty;
-	first->tz = second->tz;
 	first->u1 = second->u1;
 	first->u2 = second->u2;
 	first->v1 = second->v1;
@@ -507,21 +501,15 @@ void CopyVertexValues(sVertex_xyz_rgba_n_uv2_bt_4Bones* first, sVertex_xyz_rgba_
 	first->z = second->z;
 }
 
-void AverageVertex(sVertex_xyz_rgba_n_uv2_bt_4Bones* first, sVertex_xyz_rgba_n_uv2_bt_4Bones* second, sVertex_xyz_rgba_n_uv2_bt_4Bones* third)
+void AverageVertex(sVertex_xyz_rgba_n_uv2* first, sVertex_xyz_rgba_n_uv2* second, sVertex_xyz_rgba_n_uv2* third)
 {
 	first->a = second->a;
 	first->b = second->b;
-	first->bx = (second->bx + third->bx) / 2.0f;
-	first->by = (second->by + third->by) / 2.0f;
-	first->bz = (second->bz + third->bz) / 2.0f;
 	first->g = second->g;
 	first->nx = (second->nx + third->nx) / 2.0f;
 	first->ny = (second->ny + third->ny) / 2.0f;
 	first->nz = (second->nz + third->nz) / 2.0f;
 	first->r = second->r;
-	first->tx = second->tx;
-	first->ty = second->ty;
-	first->tz = second->tz;
 	first->u1 = (second->u1 + third->u1) / 2.0f;
 	first->u2 = (second->u2 + third->u2) / 2.0f;
 	first->v1 = (second->v1 + third->v1) / 2.0f;
@@ -550,7 +538,7 @@ DWORD WINAPI SliceThreaded(void * pInitialData)
 
 	theObject->vecMeshes[0].bDisableBackFaceCulling = true;
 
-	std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices = new std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>();
+	std::vector<sVertex_xyz_rgba_n_uv2>* vertices = new std::vector<sVertex_xyz_rgba_n_uv2>();
 	bool meshInCut = false;
 
 	for (int i = 0; i < theOldMesh->numberOfVertices; ++i)
@@ -596,9 +584,9 @@ DWORD WINAPI SliceThreaded(void * pInitialData)
 		{
 			meshInCut = true;
 
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* thirdVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+			sVertex_xyz_rgba_n_uv2* firstVert = new sVertex_xyz_rgba_n_uv2();
+			sVertex_xyz_rgba_n_uv2* secondVert = new sVertex_xyz_rgba_n_uv2();
+			sVertex_xyz_rgba_n_uv2* thirdVert = new sVertex_xyz_rgba_n_uv2();
 
 			glm::vec3 intersection1 = glm::vec3(0);
 			glm::vec3 intersection2 = glm::vec3(0);
@@ -710,8 +698,8 @@ DWORD WINAPI SliceThreaded(void * pInitialData)
 			//use the vertex inside Id,
 			glm::vec3 intersection1 = glm::vec3(0);
 			glm::vec3 intersection2 = glm::vec3(0);
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+			sVertex_xyz_rgba_n_uv2* firstVert = new sVertex_xyz_rgba_n_uv2();
+			sVertex_xyz_rgba_n_uv2* secondVert = new sVertex_xyz_rgba_n_uv2();
 
 			//the triangle we will be constructing
 			cTriangle* newTri = new cTriangle();
@@ -783,7 +771,7 @@ DWORD WINAPI SliceThreaded(void * pInitialData)
 	if (meshInCut)
 	{
 		//make a final vertex
-		sVertex_xyz_rgba_n_uv2_bt_4Bones* finalVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+		sVertex_xyz_rgba_n_uv2* finalVert = new sVertex_xyz_rgba_n_uv2();
 		CopyVertexValues(finalVert, &(*vertices)[pairs.front().first]);
 
 		std::vector<std::pair<int, int>> pairsSliceFace;
@@ -795,13 +783,13 @@ DWORD WINAPI SliceThreaded(void * pInitialData)
 		for (int i = 0; i < pairsSize; ++i)
 		{
 			vertices->push_back((*vertices)[pairs[i].first]);
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* first = &vertices->back();
+			sVertex_xyz_rgba_n_uv2* first = &vertices->back();
 			first->nx = theObject->testNormal.x;
 			first->ny = theObject->testNormal.y;
 			first->nz = theObject->testNormal.z;
 
 			vertices->push_back((*vertices)[pairs[i].second]);
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* second = &vertices->back();
+			sVertex_xyz_rgba_n_uv2* second = &vertices->back();
 			second->nx = theObject->testNormal.x;
 			second->ny = theObject->testNormal.y;
 			second->nz = theObject->testNormal.z;
@@ -988,7 +976,7 @@ bool SliceP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGam
 
 	theObject->vecMeshes[0].bDisableBackFaceCulling = true;
 
-	std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>* vertices = new std::vector<sVertex_xyz_rgba_n_uv2_bt_4Bones>();
+	std::vector<sVertex_xyz_rgba_n_uv2>* vertices = new std::vector<sVertex_xyz_rgba_n_uv2>();
 	bool meshInCut = false;
 
 	for (int i = 0; i < theOldMesh->numberOfVertices; ++i)
@@ -1035,9 +1023,9 @@ bool SliceP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGam
 		{
 			meshInCut = true;
 
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* thirdVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+			sVertex_xyz_rgba_n_uv2* firstVert = new sVertex_xyz_rgba_n_uv2();
+			sVertex_xyz_rgba_n_uv2* secondVert = new sVertex_xyz_rgba_n_uv2();
+			sVertex_xyz_rgba_n_uv2* thirdVert = new sVertex_xyz_rgba_n_uv2();
 
 			glm::vec3 intersection1 = glm::vec3(0);
 			glm::vec3 intersection2 = glm::vec3(0);
@@ -1149,8 +1137,8 @@ bool SliceP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGam
 			//use the vertex inside Id,
 			glm::vec3 intersection1 = glm::vec3(0);
 			glm::vec3 intersection2 = glm::vec3(0);
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* firstVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* secondVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+			sVertex_xyz_rgba_n_uv2* firstVert = new sVertex_xyz_rgba_n_uv2();
+			sVertex_xyz_rgba_n_uv2* secondVert = new sVertex_xyz_rgba_n_uv2();
 
 			//the triangle we will be constructing
 			cTriangle* newTri = new cTriangle();
@@ -1221,7 +1209,7 @@ bool SliceP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGam
 	if (meshInCut)
 	{
 		//make a final vertex
-		sVertex_xyz_rgba_n_uv2_bt_4Bones* finalVert = new sVertex_xyz_rgba_n_uv2_bt_4Bones();
+		sVertex_xyz_rgba_n_uv2* finalVert = new sVertex_xyz_rgba_n_uv2();
 		CopyVertexValues(finalVert, &(*vertices)[pairs.front().first]);
 
 		std::vector<std::pair<int, int>> pairsSliceFace;
@@ -1233,14 +1221,14 @@ bool SliceP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGam
 		for (int i = 0; i < pairsSize; ++i)
 		{
 			vertices->push_back((*vertices)[pairs[i].first]);
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* first = &vertices->back();
+			sVertex_xyz_rgba_n_uv2* first = &vertices->back();
 			first->nx = testNormal.x;
 			first->ny = testNormal.y;
 			first->nz = testNormal.z;
 			first->sliced = 1.0f;
 
 			vertices->push_back((*vertices)[pairs[i].second]);
-			sVertex_xyz_rgba_n_uv2_bt_4Bones* second = &vertices->back();
+			sVertex_xyz_rgba_n_uv2* second = &vertices->back();
 			second->nx = testNormal.x;
 			second->ny = testNormal.y;
 			second->nz = testNormal.z;
