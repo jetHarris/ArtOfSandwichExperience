@@ -27,8 +27,6 @@ int newMeshID = 0;
 /*static*/ unsigned int cGameObject::m_nextUniqueID = 1;
 extern cCamera* g_pTheCamera;
 
-DWORD WINAPI erasePartThreaded(void* pInitialData);
-
 cGameObject::cGameObject()
 {
 	// Assign a unique ID. 
@@ -39,8 +37,7 @@ cGameObject::cGameObject()
 	this->bIsVisible = false;
 
 	this->spawnerType = 0;
-
-	this->pAniState = NULL;					// 0
+				// 0
 	this->type = ObjectType::MISC;
 
 	rBodyOffset = glm::vec3(0, 0, 0);
@@ -83,7 +80,7 @@ void cGameObject::setPosition(glm::vec3 pos)
 	this->m_PhysicalProps.position = pos;
 }
 
-void cGameObject::overwritePotition(glm::vec3 newPosition, bool bOverwiteOldPositionToo /*=true*/)
+void cGameObject::overwritePosition(glm::vec3 newPosition, bool bOverwiteOldPositionToo /*=true*/)
 {
 	this->m_PhysicalProps.positionLast = this->m_PhysicalProps.position;
 	this->m_PhysicalProps.position = newPosition;
@@ -1412,62 +1409,52 @@ void cGameObject::RecalculateWorldMatrix()
 	this->inverseWorldMatrix = glm::inverse(worldMatrix);
 }
 
-void cGameObject::DeleteChildren(void)
-{
-	for (std::vector< cGameObject* >::iterator itChild = this->vec_pChildObjects.begin();
-		itChild != this->vec_pChildObjects.end(); itChild++)
-	{
-		// Pointer not zero (0)?
-		cGameObject* pTempChildObject = (*itChild);
-		if (pTempChildObject != 0)
-		{
-			// Recursively delete all children's children (and so on)
-			pTempChildObject->DeleteChildren();
-			// Now delete this child
-			delete pTempChildObject;
-		}
-	}
-	// There's a vector, but nothing in it
-	this->vec_pChildObjects.clear();
-	return;
-}
-
-cGameObject* cGameObject::FindChildByFriendlyName(std::string name)
-{
-	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
-	{
-		if ((*itCGO)->friendlyName == name)
-		{
-			return (*itCGO);
-		}
-	}
-	// Didn't find it.
-	return NULL;
-}
-
-cGameObject* cGameObject::FindChildByID(unsigned int ID)
-{
-	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
-	{
-		if ((*itCGO)->getUniqueID() == ID)
-		{
-			return (*itCGO);
-		}
-	}
-	// Didn't find it.
-	return NULL;
-}
-
-void cGameObject::UnsetAllAnimationStates()
-{
-}
-
-
-
-//glm::quat cGameObject::getFinalMeshQOrientation(void)
+//void cGameObject::DeleteChildren(void)
 //{
-//	return this->m_PhysicalProps.qOrientation * this->m_meshQOrientation;
+//	for (std::vector< cGameObject* >::iterator itChild = this->vec_pChildObjects.begin();
+//		itChild != this->vec_pChildObjects.end(); itChild++)
+//	{
+//		// Pointer not zero (0)?
+//		cGameObject* pTempChildObject = (*itChild);
+//		if (pTempChildObject != 0)
+//		{
+//			// Recursively delete all children's children (and so on)
+//			pTempChildObject->DeleteChildren();
+//			// Now delete this child
+//			delete pTempChildObject;
+//		}
+//	}
+//	// There's a vector, but nothing in it
+//	this->vec_pChildObjects.clear();
+//	return;
 //}
+
+//cGameObject* cGameObject::FindChildByFriendlyName(std::string name)
+//{
+//	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
+//	{
+//		if ((*itCGO)->friendlyName == name)
+//		{
+//			return (*itCGO);
+//		}
+//	}
+//	// Didn't find it.
+//	return NULL;
+//}
+
+//cGameObject* cGameObject::FindChildByID(unsigned int ID)
+//{
+//	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
+//	{
+//		if ((*itCGO)->getUniqueID() == ID)
+//		{
+//			return (*itCGO);
+//		}
+//	}
+//	// Didn't find it.
+//	return NULL;
+//}
+
 
 glm::quat cGameObject::getFinalMeshQOrientation(unsigned int meshID)
 {	// Does NOT check for the index of the mesh!

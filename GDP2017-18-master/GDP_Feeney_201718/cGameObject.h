@@ -19,8 +19,6 @@
 #include "cMesh.h"
 #include <Windows.h>
 
-class cAnimationState;			// Forward declare 
-
 class sVertex_xyz_rgba_n_uv2;
 class cTriangle;
 
@@ -42,7 +40,8 @@ class cGameObject : public iPhysicalObject
 public:
 	cGameObject();		// constructor
 	~cGameObject();		// destructor
-//	cGameObject(const cGameObject &obj);  // copy constructor
+
+	//methods
 
 	//***** from the iPhysicalObject interface ********************
 	virtual void SetPhysState( cPhysicalProperties &PhysState );
@@ -51,8 +50,8 @@ public:
 	//*************************************************************
 	glm::vec3 getPosition(void);
 	void setPosition(glm::vec3 pos);
-	// bOverwritePositionToo effectively stops the object if the "past position" is being used
-	void	  overwritePotition( glm::vec3 newPosition, bool bOverwiteOldPositionToo = true );
+
+	void	  overwritePosition( glm::vec3 newPosition, bool bOverwiteOldPositionToo = true );
 	glm::quat getQOrientation(void);		// Post-rotation
 	void      overwriteQOrientation( glm::quat newOrientation );
 	void      overwriteQOrientationEuler( glm::vec3 newOrientationEuler, bool bIsDegrees = true );
@@ -61,42 +60,43 @@ public:
 
 	//****************************************************************************************
 
+	//Divides one mesh into 2 based on a slicing plane
 	bool Slice(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal);
+	//detects is a vertex is on one side of a plane or the other. Used in Slice()
 	bool RightSideOfPlane(sVertex_xyz_rgba_n_uv2&const vertex, glm::vec3&const pointOnPlane, glm::vec3&const testNormal);
+	//a method that goes through the object and deletes unused vertices
 	void CleanOldVertices(std::vector<sVertex_xyz_rgba_n_uv2>* vertices, std::vector<cTriangle>* triangles);
+	//moves all vertices of a mesh after a change of origin for the object
 	void ReorientPositionAndVertices(std::vector<sVertex_xyz_rgba_n_uv2>* vertices, std::vector<cTriangle>* triangles, bool makePhysics);
+	//finds the intersection point between a line and a plane
 	glm::vec3 FindIntersectionPoint(sVertex_xyz_rgba_n_uv2&const vertexIn, sVertex_xyz_rgba_n_uv2&const vertexOut, glm::vec3&const pointOnPlane, glm::vec3&const testNormal);
+	//gets the average values between 2 vertices
 	glm::vec3 AveragePoint(sVertex_xyz_rgba_n_uv2&const vertex1, sVertex_xyz_rgba_n_uv2&const vertex2);
 
-	//for threading the slice
-	void loadMeshIntoVAONow();
-	bool slicingFinished = false;
-	std::vector<cMesh> loadMeshVector;
-	bool makeNewMesh;
-	glm::vec3 pointOnPlane;
-	glm::vec3 testNormal;
-	HANDLE slicingHandle;
-	DWORD slicingAddress;
-	std::string newMeshName;
-
-
-
-	std::string friendlyName;
-
 	void calcXYZDepths(float &xIn, float &yIn, float &zIn);
+
+	glm::quat getFinalMeshQOrientation(unsigned int meshID);
+	glm::quat getFinalMeshQOrientation(glm::quat &meshQOrientation);
+
 	inline unsigned int getUniqueID(void) { return this->m_UniqueID; }
-
-	//glm::vec3 animationPosition;
-
-	bool bDiscardTexture = false;
-	bool isLookedAt = false;
-
 	glm::vec3 GetVelocity();
 	void SetVelocity(glm::vec3 newVel);
 	void UpdatePhys(double time);
+	void RecalculateWorldMatrix();
+
+	
+
+	
+	
+
+	std::string friendlyName;
+	bool bDiscardTexture = false;
+	bool isLookedAt = false;
+
+
 	glm::mat4 worldMatrix;
 	glm::mat4 inverseWorldMatrix;
-	void RecalculateWorldMatrix();
+	
 	bool physics = false;
 	nPhysics::iRigidBody* rBody;
 	glm::vec3 rBodyOffset;
@@ -119,30 +119,29 @@ public:
 	//	in the mesh information.
 
 	std::vector<sMeshDrawInfo> vecMeshes;
-	glm::quat getFinalMeshQOrientation(unsigned int meshID);
-	glm::quat getFinalMeshQOrientation(glm::quat &meshQOrientation);
 
 
-	bool bIsVisible;	// If false, any meshes are NOT drawn (not child objects could still be visible)
-
-	// Our "child" objects
-	std::vector< cGameObject* > vec_pChildObjects;
-	void DeleteChildren(void);
-	// Returns NULL if not found
-	cGameObject* FindChildByFriendlyName( std::string name );
-	cGameObject* FindChildByID( unsigned int ID );
-
-	void UnsetAllAnimationStates();
-
-	cAnimationState*			pAniState;			
+	bool bIsVisible;
 	cPhysicalProperties m_PhysicalProps;
+
+
+	//for threading the slice
+	//unused currently as the threaded version is disable
+	///////////////////////////////////////////////////////
+	void loadMeshIntoVAONow();
+	bool slicingFinished = false;
+	std::vector<cMesh> loadMeshVector;
+	bool makeNewMesh;
+	glm::vec3 pointOnPlane;
+	glm::vec3 testNormal;
+	HANDLE slicingHandle;
+	DWORD slicingAddress;
+	std::string newMeshName;
+	///////////////////////////////////////////////////////
 private:
 	unsigned int m_UniqueID;
 	// Used when creating objects
-	static unsigned int m_nextUniqueID;
-
-	// All the properties of a physical object 
-	
+	static unsigned int m_nextUniqueID;	
 
 };
 
