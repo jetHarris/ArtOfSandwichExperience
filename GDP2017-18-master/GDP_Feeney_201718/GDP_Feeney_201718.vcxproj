@@ -163,7 +163,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="cBread.cpp" />
     <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cCheese.cpp" />
     <ClCompile Include="cEmitter.cpp" />
     <ClCompile Include="cFBO.cpp" />
     <ClCompile Include="cGameObject.cpp" />
@@ -171,10 +173,13 @@
     <ClCompile Include="cLightManager.cpp" />
     <ClCompile Include="cMesh.cpp" />
     <ClCompile Include="cModelAssetLoader.cpp" />
+    <ClCompile Include="cSalami.cpp" />
+    <ClCompile Include="cSandwichItem.cpp" />
     <ClCompile Include="cShader.cpp" />
     <ClCompile Include="cShaderHolder.cpp" />
     <ClCompile Include="cShaderManager.cpp" />
     <ClCompile Include="cSoundPlayer.cpp" />
+    <ClCompile Include="cTomato.cpp" />
     <ClCompile Include="cTriangle.cpp" />
     <ClCompile Include="cVAOMeshManager.cpp" />
     <ClCompile Include="Error\CErrorLog.cpp" />
@@ -216,7 +221,9 @@
   <ItemGroup>
     <ClInclude Include="assimp\cAssimpBasic.h" />
     <ClInclude Include="assimp\cAssimpBasic_Imp.h" />
+    <ClInclude Include="cBread.h" />
     <ClInclude Include="cCamera.h" />
+    <ClInclude Include="cCheese.h" />
     <ClInclude Include="cEmitter.h" />
     <ClInclude Include="cFBO.h" />
     <ClInclude Include="cFrameBuffer.h" />
@@ -226,10 +233,13 @@
     <ClInclude Include="cMesh.h" />
     <ClInclude Include="cModelAssetLoader.h" />
     <ClInclude Include="cParticle.h" />
+    <ClInclude Include="cSalami.h" />
+    <ClInclude Include="cSandwichItem.h" />
     <ClInclude Include="cSceneManager.h" />
     <ClInclude Include="cShaderHolder.h" />
     <ClInclude Include="cShaderManager.h" />
     <ClInclude Include="cSoundPlayer.h" />
+    <ClInclude Include="cTomato.h" />
     <ClInclude Include="cTriangle.h" />
     <ClInclude Include="cVAOMeshManager.h" />
     <ClInclude Include="Error\CErrorLog.h" />

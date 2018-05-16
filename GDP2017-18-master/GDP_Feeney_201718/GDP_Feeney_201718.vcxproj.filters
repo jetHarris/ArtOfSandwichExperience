@@ -67,6 +67,9 @@
     <Filter Include="Physics_Properties">
       <UniqueIdentifier>{c3cf21fe-5767-4fbc-8cac-fbcec8c72ba2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SandwichItems">
+      <UniqueIdentifier>{e5698794-615e-4274-999f-3d893514ff7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TheMain.cpp">
@@ -188,6 +191,21 @@
     </ClCompile>
     <ClCompile Include="cShaderHolder.cpp">
       <Filter>ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cSandwichItem.cpp">
+      <Filter>SandwichItems</Filter>
+    </ClCompile>
+    <ClCompile Include="cCheese.cpp">
+      <Filter>SandwichItems</Filter>
+    </ClCompile>
+    <ClCompile Include="cSalami.cpp">
+      <Filter>SandwichItems</Filter>
+    </ClCompile>
+    <ClCompile Include="cTomato.cpp">
+      <Filter>SandwichItems</Filter>
+    </ClCompile>
+    <ClCompile Include="cBread.cpp">
+      <Filter>SandwichItems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +343,21 @@
     </ClInclude>
     <ClInclude Include="cShaderHolder.h">
       <Filter>ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cSandwichItem.h">
+      <Filter>SandwichItems</Filter>
+    </ClInclude>
+    <ClInclude Include="cCheese.h">
+      <Filter>SandwichItems</Filter>
+    </ClInclude>
+    <ClInclude Include="cSalami.h">
+      <Filter>SandwichItems</Filter>
+    </ClInclude>
+    <ClInclude Include="cTomato.h">
+      <Filter>SandwichItems</Filter>
+    </ClInclude>
+    <ClInclude Include="cBread.h">
+      <Filter>SandwichItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

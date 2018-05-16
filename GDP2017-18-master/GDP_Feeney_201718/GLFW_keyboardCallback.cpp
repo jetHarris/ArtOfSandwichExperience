@@ -7,6 +7,10 @@
 
 #include "cEmitter.h"
 #include "cSoundPlayer.h"
+#include "cCheese.h"
+#include "cBread.h"
+#include "cSalami.h"
+#include "cTomato.h"
 
 
 
@@ -34,6 +38,7 @@ extern float titleScreenCounter;
 
 extern int playerScore;
 
+//variables used in relation to the mouse movement and camera
 float lastX = 400.0f, lastY = 300.0f;
 float yaw = 0.0f;
 float pitch = 0.0f;
@@ -478,7 +483,7 @@ void DragOrSpawn(int type)
 			{
 			case 0:
 			{
-				cGameObject* pTempGO = new cGameObject();
+				cTomato* pTempGO = new cTomato();
 				pTempGO->friendlyName = "Tomato";
 				pTempGO->type = ObjectType::TOMATO;
 
@@ -513,7 +518,7 @@ void DragOrSpawn(int type)
 			break;
 			case 1:
 			{
-				cGameObject* pTempGO = new cGameObject();
+				cCheese* pTempGO = new cCheese();
 				pTempGO->friendlyName = "Cheese";
 				pTempGO->type = ObjectType::CHEESE;
 
@@ -547,7 +552,7 @@ void DragOrSpawn(int type)
 			break;
 			case 2:
 			{
-				cGameObject* pTempGO = new cGameObject();
+				cSalami* pTempGO = new cSalami();
 				pTempGO->friendlyName = "Meat";
 				pTempGO->type = ObjectType::SALAMI;
 
@@ -582,47 +587,8 @@ void DragOrSpawn(int type)
 			break;
 			case 3:
 			{
-				//the commented out section was for when the bread was spawned instead of sliced
-				//cGameObject* pTempGO = new cGameObject();
-				//pTempGO->friendlyName = "Bread";
-				//pTempGO->type = ObjectType::BREADSLICE;
 
-				//cPhysicalProperties physState;
-				//physState.position = glm::vec3(0.0f, 3.0, 14.0);
-				//physState.setOrientationEulerAngles(glm::vec3(0, 0, 90), true);
-				//pTempGO->SetPhysState(physState);
-				//pTempGO->physics = true;
-
-				//sMeshDrawInfo meshInfo;
-				//meshInfo.scale = 2.0f; //5.0f for zuc
-				//meshInfo.debugDiffuseColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-				//meshInfo.name = "breadSlice.ply";
-				//meshInfo.debugDiffuseColour = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
-				//meshInfo.bDrawAsWireFrame = false;
-				//meshInfo.bDisableBackFaceCulling = true;
-				//meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("BreadSliceTexture.bmp", 1.0f));
-				////meshInfo.vecMehs2DTextures.push_back(sTextureBindBlendInfo("Utah_Teapot_xyz_n_uv_Enterprise.bmp", 0.0f));
-				//pTempGO->vecMeshes.push_back(meshInfo);
-
-				//nPhysics::iShape* shape;
-				//nPhysics::sRigidBodyDesc desc;
-				//desc.Mass = 1.0f;
-				//desc.Position = pTempGO->getPosition();
-
-				//pTempGO->RecalculateWorldMatrix();
-				//float xWidth;
-				//float yWidth;
-				//float zWidth;
-				//pTempGO->calcXYZDepths(xWidth, yWidth, zWidth);
-
-				//shape = gPhysicsFactory->CreateBox(glm::vec3(xWidth, yWidth, zWidth));
-				//pTempGO->rBody = gPhysicsFactory->CreateRigidBody(desc, shape);
-				//::gPhysicsWorld->AddRigidBody(pTempGO->rBody);
-				//pTempGO->rBodyOrientationOffset = pTempGO->getQOrientation();
-
-				//::g_vecGameObjects.push_back(pTempGO);
-
-				cGameObject* pTempGO = new cGameObject();
+				cBread* pTempGO = new cBread();
 				pTempGO->friendlyName = "bread";
 				pTempGO->type = ObjectType::BREADSLICE;
 
