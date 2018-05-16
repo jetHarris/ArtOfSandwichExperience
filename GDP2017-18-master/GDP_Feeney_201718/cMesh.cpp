@@ -6,7 +6,6 @@ cMesh::cMesh()
 {
 	this->numberOfVertices = 0;
 	this->numberOfTriangles = 0;
-	//
 	this->maxExtent = 0.0f;
 	this->scaleForUnitBBox = 1.0f;
 	return;
@@ -15,7 +14,6 @@ cMesh::cMesh()
 
 cMesh::~cMesh()
 {
-
 	return;
 }
 
@@ -75,63 +73,6 @@ void cMesh::CalculateExtents(void)
 	}
 	//
 	this->scaleForUnitBBox = 1.0f / this->maxExtent;
-
-	return;
-}
-
-
-// Takes an indexed model and makes just a vertex array model
-void cMesh::FlattenIndexedModel(void)
-{
-	// 1. Make a copy of the original vertices
-	// 2. Using the triangle array, replace the original data
-
-	int origNumVertices = this->numberOfVertices;
-
-	sVertex_xyz_rgba_n_uv2* pVertOrig = new sVertex_xyz_rgba_n_uv2[this->numberOfVertices];
-
-	for ( int index = 0; index < origNumVertices; index++ )
-	{
-		pVertOrig[index] = this->pVertices[index];
-	}
-	// We now have a copy of the original vertices
-
-	// Adjust the original vertex array
-	delete [] this->pVertices;		// GOTCHA!
-
-//	int numberOfVertsTOTALGUESS = this->numberOfVertices * 4;
-//	this->pVertices = new cVertex_xyz_rgb[numberOfVertsTOTALGUESS];
-
-	// Actually, the number of vertices would be 
-	//	the number of triangles x 3...
-	int numberOfVertsNeeded = this->numberOfTriangles * 3;
-	numberOfVertsNeeded += 30;	// Add a few, just in case...
-	//this->pVertices = new cVertex_xyz_rgb_n[numberOfVertsNeeded];
-	//this->pVertices = new sVertex_xyz_rgba_n_uv2_bt[numberOfVertsNeeded];
-	this->pVertices = new sVertex_xyz_rgba_n_uv2[numberOfVertsNeeded];
-
-	int triIndex = 0;
-	int vertIndex = 0;
-	for ( ; triIndex < this->numberOfTriangles; 
-		  triIndex++, vertIndex += 3 )
-	{
-		// 3 4 132 80 
-		int triVert0_index = this->pTriangles[triIndex].vertex_ID_0;
-		int triVert1_index = this->pTriangles[triIndex].vertex_ID_1;
-		int triVert2_index = this->pTriangles[triIndex].vertex_ID_2;
-
-		sVertex_xyz_rgba_n_uv2 V0 = pVertOrig[triVert0_index];
-		sVertex_xyz_rgba_n_uv2 V1 = pVertOrig[triVert1_index];
-		sVertex_xyz_rgba_n_uv2 V2 = pVertOrig[triVert2_index];
-
-		this->pVertices[vertIndex + 0] = V0;
-		this->pVertices[vertIndex + 1] = V1;
-		this->pVertices[vertIndex + 2] = V2;
-	}//for ( ; 
-	
-	// Update the number of vertices
-	// HACK: -3 YIKES!!! 
-	this->numberOfVertices = vertIndex - 3;	
 
 	return;
 }

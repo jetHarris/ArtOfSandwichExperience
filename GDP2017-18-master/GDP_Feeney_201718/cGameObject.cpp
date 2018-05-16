@@ -1409,53 +1409,6 @@ void cGameObject::RecalculateWorldMatrix()
 	this->inverseWorldMatrix = glm::inverse(worldMatrix);
 }
 
-//void cGameObject::DeleteChildren(void)
-//{
-//	for (std::vector< cGameObject* >::iterator itChild = this->vec_pChildObjects.begin();
-//		itChild != this->vec_pChildObjects.end(); itChild++)
-//	{
-//		// Pointer not zero (0)?
-//		cGameObject* pTempChildObject = (*itChild);
-//		if (pTempChildObject != 0)
-//		{
-//			// Recursively delete all children's children (and so on)
-//			pTempChildObject->DeleteChildren();
-//			// Now delete this child
-//			delete pTempChildObject;
-//		}
-//	}
-//	// There's a vector, but nothing in it
-//	this->vec_pChildObjects.clear();
-//	return;
-//}
-
-//cGameObject* cGameObject::FindChildByFriendlyName(std::string name)
-//{
-//	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
-//	{
-//		if ((*itCGO)->friendlyName == name)
-//		{
-//			return (*itCGO);
-//		}
-//	}
-//	// Didn't find it.
-//	return NULL;
-//}
-
-//cGameObject* cGameObject::FindChildByID(unsigned int ID)
-//{
-//	for (std::vector<cGameObject*>::iterator itCGO = this->vec_pChildObjects.begin(); itCGO != this->vec_pChildObjects.end(); itCGO++)
-//	{
-//		if ((*itCGO)->getUniqueID() == ID)
-//		{
-//			return (*itCGO);
-//		}
-//	}
-//	// Didn't find it.
-//	return NULL;
-//}
-
-
 glm::quat cGameObject::getFinalMeshQOrientation(unsigned int meshID)
 {	// Does NOT check for the index of the mesh!
 	return this->m_PhysicalProps.qOrientation * this->vecMeshes[meshID].getQOrientation();

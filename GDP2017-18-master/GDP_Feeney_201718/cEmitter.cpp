@@ -9,33 +9,38 @@ extern cGameObject* pToaster;
 
 cEmitter::cEmitter()
 {
-	// Maybe set some defaults?? 
-	// (Or just be careful, right?)
 	this->m_numParticles = 0;
 	this->m_maxParticleCreatedPerStep = 0;
 	this->m_minLife = 0.0f;
-	this->m_maxLife = 0.0f;
-	// 
+	this->m_maxLife = 0.0f; 
 	this->m_maxInitVel = glm::vec3(0.0f);
 	this->m_minInitVel = glm::vec3(0.0f);
 	this->m_minRangeFromEmitter = glm::vec3(0.0f);
-	this->m_maxRangeFromEmitter = glm::vec3(0.0f);
-
-	
+	this->m_maxRangeFromEmitter = glm::vec3(0.0f);	
 	return;
 }
 
 cEmitter::cEmitter(glm::vec3 pos)
 {
+	this->m_numParticles = 0;
+	this->m_maxParticleCreatedPerStep = 0;
+	this->m_minLife = 0.0f;
+	this->m_maxLife = 0.0f;
+	this->m_maxInitVel = glm::vec3(0.0f);
+	this->m_minInitVel = glm::vec3(0.0f);
+	this->m_minRangeFromEmitter = glm::vec3(0.0f);
+	this->m_maxRangeFromEmitter = glm::vec3(0.0f);
+	this->xRange = 1.8;
+
 	position = pos;
 	
+	//the particles for the emitter will transition through these colours based on lifetime
 	particleColours.push_back(glm::vec4(0, 0, 0, 0.2));
 	particleColours.push_back(glm::vec4(0, 0, 0, 0.5));
 	particleColours.push_back(glm::vec4(237.0 / 255.0, 0, 0, 1));
 	particleColours.push_back(glm::vec4(237.0 / 255.0, 97.0 / 255.0, 16.0 / 255.0, 1));
 	particleColours.push_back(glm::vec4(237.0 / 255.0, 97.0 / 255.0, 16.0 / 255.0, 1));
 	particleColours.push_back(glm::vec4(244.0/255.0, 244.0 / 255.0, 66.0 / 255.0, 1));
-	//particleColours.push_back(glm::vec4(1, 1, 1, 1));
 
 	partColSize = particleColours.size();
 	fireCurrentCenterX = 0;

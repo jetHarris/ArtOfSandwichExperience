@@ -1,15 +1,8 @@
 #ifndef _cMesh_HG_
 #define _cMesh_HG_
 
-//#include "cVertex_xyz_rgb_n.h"
-//#include "sVertex_xyz_rgba_n_uv2_bt.h"
 #include "sVertex_xyz_rgba_n_uv2.h"
 #include "cTriangle.h" 
-
-//#define MAX_VERTEX_ARRAY_SIZE 2048
-//#define MAX_INDEX_ARRAY_SIZE 2048
-//static const int MAX_VERTEX_ARRAY_SIZE = 4096;
-//static const int MAX_INDEX_ARRAY_SIZE = 4096;
 
 #include <string>
 #include <glm/vec3.hpp>
@@ -22,15 +15,13 @@ public:
 
 	std::string name;	// the friendly name of the mesh
 
+	//all the vertices of the mesh
 	sVertex_xyz_rgba_n_uv2* pVertices;
 	int numberOfVertices;
 
+	//all the triangles of the mesh
 	cTriangle* pTriangles;
 	int numberOfTriangles;
-
-	// Takes an indexed model and makes just a vertex array model
-	// WARNING: Will OVERWRITE the vertex array 
-	void FlattenIndexedModel(void);
 
 	// First 2 are the "bounding box" edges
 	glm::vec3 minXYZ;
@@ -38,7 +29,6 @@ public:
 	// This is Max - Min for each x,y,z
 	glm::vec3 maxExtentXYZ;	
 	float maxExtent;		// Biggest of above
-	// Scale can be 1.0 div maxExtent;
 	float scaleForUnitBBox;
 
 	void CalculateExtents(void);

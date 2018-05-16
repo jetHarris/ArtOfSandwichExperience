@@ -7,8 +7,6 @@ class iInput
 {
 public:
 	virtual ~iInput();
-
-
 };
 
 #endif

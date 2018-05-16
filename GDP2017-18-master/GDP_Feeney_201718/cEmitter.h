@@ -23,12 +23,9 @@ public:
 	int partColSize;
 	float fireCurrentCenterX;
 	float fireCenterResetCounter;
-	float xRange = 1.8;
+	float xRange;
 private:
 	int m_numParticles;
-	
-
-	// 
 	int m_maxParticleCreatedPerStep;
 	glm::vec3 m_minInitVel;
 	glm::vec3 m_maxInitVel;

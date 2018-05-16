@@ -15,15 +15,10 @@ public:
 	~cCamera();
 
 	glm::mat4 getViewMatrix(void);
-public:
-
 	glm::vec3 getEyePosition();
 	glm::vec3 cameraPos;
 	glm::vec3 cameraFront;
 	glm::vec3 cameraUp;
-
-private:
-
 };
 
 #endif

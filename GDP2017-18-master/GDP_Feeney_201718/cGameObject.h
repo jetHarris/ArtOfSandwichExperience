@@ -10,11 +10,8 @@
 #include <BulletPhysics\BulletPhysics\cBulletPhysicsFactory.h>
 #include <queue>
 
-#include "iDebugRenderer.h"
-
 #include "Physics/cPhysicalProperties.h"
-#include "Physics/iPhysicalObject.h"	// For the access to things that will update the positions, etc.
-
+#include "Physics/iPhysicalObject.h"
 #include "sMeshDrawInfo.h"
 #include "cMesh.h"
 #include <Windows.h>
@@ -117,7 +114,6 @@ public:
 	//  If the object alignment is the same as the mesh
 	//	alignment, then don't set the orientation and offset
 	//	in the mesh information.
-
 	std::vector<sMeshDrawInfo> vecMeshes;
 
 
