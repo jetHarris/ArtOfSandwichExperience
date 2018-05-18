@@ -7,6 +7,7 @@ class cCheese : public cSandwichItem
 public:
 	cCheese();
 	~cCheese();
+	virtual cGameObject* MakeOtherHalf();
 };
 #endif // !_cCheese_HG_
 

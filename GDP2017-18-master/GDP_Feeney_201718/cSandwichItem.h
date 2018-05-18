@@ -8,6 +8,7 @@ class cSandwichItem : public cGameObject
 public:
 	cSandwichItem();
 	~cSandwichItem();
+	virtual cGameObject* MakeOtherHalf() = 0;
 };
 
 

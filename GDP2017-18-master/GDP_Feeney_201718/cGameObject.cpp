@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm\gtx\intersect.hpp>
 #include "cShaderManager.h"
+#include "cSandwichItem.h"
 #include <iostream>
 #include <set>
 extern cVAOMeshManager* g_pVAOManager;
@@ -1271,7 +1272,9 @@ bool SliceP(bool makeNewMesh, glm::vec3 pointOnPlane, glm::vec3 testNormal, cGam
 		//before reassigning the vertices make a copy of the object and call this method on it, but reverse the normal
 		if (makeNewMesh)
 		{
-			cGameObject* theOtherHalf = new cGameObject();
+			//now make a new object that will be the other half of the sliced object
+			cGameObject* theOtherHalf = ((cSandwichItem*)theObject)->MakeOtherHalf();
+			//cGameObject* theOtherHalf = new cGameObject();
 			//somehow the mesh is getting more and more complex, to combat this we will test for type here and simply make
 			switch (theObject->type)
 			{

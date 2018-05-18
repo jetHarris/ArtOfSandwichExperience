@@ -7,5 +7,6 @@ class cSalami : public cSandwichItem
 public:
 	cSalami();
 	~cSalami();
+	virtual cGameObject* MakeOtherHalf();
 };
 #endif // !_cSalami_HG_

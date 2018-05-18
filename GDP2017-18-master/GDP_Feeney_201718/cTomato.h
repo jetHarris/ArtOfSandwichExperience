@@ -7,5 +7,6 @@ class cTomato : public cSandwichItem
 public:
 	cTomato();
 	~cTomato();
+	virtual cGameObject* MakeOtherHalf();
 };
 #endif // !_cTomato_HG_
